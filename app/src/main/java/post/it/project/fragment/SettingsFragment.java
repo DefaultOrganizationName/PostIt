@@ -19,4 +19,7 @@ public class SettingsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.settings_fragment, container, false);
         return rootView;
     }
+
+
+
 }

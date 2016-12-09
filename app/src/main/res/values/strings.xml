@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">PostIt</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="settings_string">Choose the social networks:</string>
+    <string name="vk">ВКонтакте</string>
+    <string name="ok">Одноклассники</string>
+    <string name="fb">Facebook</string>
+    <string name="insta">Instagram</string>
+
+    <string name="post_string">bla bla</string>
+    <string name="post">POST</string>
 </resources>
