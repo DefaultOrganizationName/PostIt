@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PostIt</string>
 
-    <string name="settings_string">Choose the social networks:</string>
+    <string name="settings_string">Choose social networks:</string>
     <string name="vk">ВКонтакте</string>
     <string name="ok">Одноклассники</string>
     <string name="fb">Facebook</string>
@@ -9,4 +9,6 @@
 
     <string name="post_string">bla bla</string>
     <string name="post">POST</string>
+
+    <string name="draft_string">DRAFT</string>
 </resources>

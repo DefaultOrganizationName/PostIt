@@ -3,6 +3,7 @@ package post.it.project.postit;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -21,8 +22,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import post.it.project.adapter.SectionsPagerAdapter;
+import post.it.project.fragment.PostFragment;
+import post.it.project.fragment.SettingsFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SettingsFragment.onSomeEventListener, PostFragment.onSomeEventListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -44,9 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
     }
 
+    @Override
+    public void someEvent(String s) {
+        android.app.Fragment settingsFragment = getFragmentManager().findFragmentById(R.id.postFragId);
+        ((TextView) settingsFragment.getView().findViewById(R.id.textInPost)).setText(s);
+    }
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.
