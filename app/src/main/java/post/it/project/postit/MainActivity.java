@@ -24,36 +24,46 @@ import android.widget.TextView;
 import post.it.project.adapter.SectionsPagerAdapter;
 import post.it.project.fragment.PostFragment;
 import post.it.project.fragment.SettingsFragment;
+import post.it.project.storage.PersistantStorage;
 
-public class MainActivity extends AppCompatActivity implements SettingsFragment.onSomeEventListener, PostFragment.onSomeEventListener {
+public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    boolean[] networks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        networks = new boolean[4];
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mViewPager.getAdapter().notifyDataSetChanged();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        PersistantStorage.init(this);
+
     }
 
-    @Override
-    public void someEvent(String s) {
-        android.app.Fragment settingsFragment = getFragmentManager().findFragmentById(R.id.postFragId);
-        ((TextView) settingsFragment.getView().findViewById(R.id.textInPost)).setText(s);
-    }
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.

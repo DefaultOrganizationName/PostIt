@@ -15,20 +15,25 @@ import post.it.project.postit.R;
 
 public class DraftFragment extends Fragment {
 
-//    public interface onSomeEventListener {
-//        public void someEvent(String s);
+    private String title;
+    private int page;
+
+    // newInstance constructor for creating fragment with arguments
+//    public static DraftFragment newInstance(int page, String title) {
+//        DraftFragment fragmentFirst = new DraftFragment();
+//        Bundle args = new Bundle();
+//        args.putInt("someInt", page);
+//        args.putString("someTitle", title);
+//        fragmentFirst.setArguments(args);
+//        return fragmentFirst;
 //    }
 //
-//    onSomeEventListener someEventListener;
-//
+//    // Store instance variables based on arguments passed
 //    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        try {
-//            someEventListener = (onSomeEventListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString() + " must implement onSomeEventListener");
-//        }
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        page = getArguments().getInt("someInt", 0);
+//        title = getArguments().getString("someTitle");
 //    }
 
     @Override
