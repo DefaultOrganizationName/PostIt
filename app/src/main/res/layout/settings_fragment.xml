@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/settings_string"/>
 
-    <Button
+    <Switch
         android:text="@string/vk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

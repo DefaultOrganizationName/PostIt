@@ -1,13 +1,15 @@
 package post.it.project.fragment;
 
-import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import post.it.project.postit.R;
+
+import static post.it.project.storage.PersistantStorage.getDraftText;
 
 /**
  * Created by Михаил on 09.12.2016.
@@ -40,6 +42,10 @@ public class DraftFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.draft_fragment, container, false);
+        TextView textView = (TextView) rootView.findViewById(R.id.section_draft);
+        if (getDraftText("draft_text") != null) {
+            textView.setText(getDraftText("draft_text"));
+        }
         return rootView;
     }
 }
