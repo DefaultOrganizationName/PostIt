@@ -1,12 +1,19 @@
 package post.it.project.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import post.it.project.adapter.DraftsEntryAdapter;
+import post.it.project.database.DraftDatabase;
+import post.it.project.postit.Post;
 import post.it.project.postit.R;
 
 import static post.it.project.storage.PersistantStorage.getDraftText;
@@ -43,9 +50,34 @@ public class DraftFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.draft_fragment, container, false);
         TextView textView = (TextView) rootView.findViewById(R.id.section_draft);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        final DraftsEntryAdapter adapter = new DraftsEntryAdapter(getContext());
+        recyclerView.setAdapter(adapter);
+
+        final Context context = getContext();
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                adapter.setPost(new DraftDatabase(context).getAll());
+//            }
+//        })
+
+
         if (getDraftText("draft_text") != null) {
             textView.setText(getDraftText("draft_text"));
         }
+
+//        Post mda = PostFragment.ppost;
+//
+//        if (mda != null) {
+//            draftText.setText(mda.post_text);
+//            imageView.setImageBitmap(mda.image_bitmap);
+//        }
         return rootView;
     }
 }

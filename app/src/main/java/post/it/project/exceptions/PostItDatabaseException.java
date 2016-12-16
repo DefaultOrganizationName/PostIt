@@ -5,7 +5,7 @@ package post.it.project.exceptions;
  */
 
 public class PostItDatabaseException extends Exception {
-    public PostItDatabaseException() {};
+    public PostItDatabaseException() {}
 
     public PostItDatabaseException(String message) {
         super(message);

@@ -11,6 +11,19 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    public static volatile DatabaseHelper instance;
+
+    static DatabaseHelper getInstance(Context context) {
+        if (instance == null) {
+            synchronized (DatabaseHelper.class) {
+                if (instance == null) {
+                    instance = new DatabaseHelper(context);
+                }
+            }
+        }
+        return instance;
+    }
+
     public DatabaseHelper(Context context) {
         // конструктор суперкласса
         super(context, "myDB", null, 1);
