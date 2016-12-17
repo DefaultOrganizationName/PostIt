@@ -26,5 +26,10 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
+    compile 'com.facebook.stetho:stetho:1.4.1'
+    compile 'com.facebook.stetho:stetho-urlconnection:1.4.1'
+    compile 'com.facebook.fresco:fresco:0.14.0'
+
+    compile 'com.vk:androidsdk:1.6.7'
     testCompile 'junit:junit:4.12'
 }
