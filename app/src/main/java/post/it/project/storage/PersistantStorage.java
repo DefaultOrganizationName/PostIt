@@ -28,21 +28,21 @@ public class PersistantStorage {
         settings = context.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE);
         editor = settings.edit();
     }
-
-    public static void addDraftText(String name, String value) {
-        if (settings == null) {
-            init();
-        }
-        editor.putString(name, value);
-        editor.commit();
-    }
-
-    public static String getDraftText(String name) {
-        if (settings == null) {
-            init();
-        }
-        return settings.getString(name, null);
-    }
+//
+//    public static void addDraftText(String name, String value) {
+//        if (settings == null) {
+//            init();
+//        }
+//        editor.putString(name, value);
+//        editor.commit();
+//    }
+//
+//    public static String getDraftText(String name) {
+//        if (settings == null) {
+//            init();
+//        }
+//        return settings.getString(name, null);
+//    }
 
     public static void addProperty(String name, boolean value) {
         if (settings == null) {

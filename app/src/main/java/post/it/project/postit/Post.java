@@ -8,15 +8,15 @@ import android.support.annotation.NonNull;
  */
 
 public class Post {
-    public static int[] networks;
+    public final int[] networks;
 
-    public static String post_text;
-    public static Bitmap image_bitmap;
+    public final String post_text;
+    public final Bitmap image_bitmap;
 
     // post_text or image_bitmap can be null
     public Post(int[] networks, String post_text, Bitmap image_bitmap) {
-        Post.networks = networks;
-        Post.post_text = post_text;
-        Post.image_bitmap = image_bitmap;
+        this.networks = networks;
+        this.post_text = post_text;
+        this.image_bitmap = image_bitmap;
     }
 }
