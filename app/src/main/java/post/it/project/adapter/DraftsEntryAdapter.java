@@ -48,6 +48,9 @@ public class DraftsEntryAdapter extends RecyclerView.Adapter<DraftsEntryAdapter.
 
     @Override
     public int getItemCount() {
+        if (posts == null) {
+            return 0;
+        }
         return posts.size();
     }
 
@@ -65,4 +68,6 @@ public class DraftsEntryAdapter extends RecyclerView.Adapter<DraftsEntryAdapter.
             return new DraftsViewHolder(view);
         }
     }
+
+    private final String TAG = "EntryAdapter";
 }

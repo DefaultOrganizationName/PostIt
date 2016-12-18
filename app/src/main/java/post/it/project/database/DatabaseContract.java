@@ -19,7 +19,7 @@ public class DatabaseContract {
         };
     }
 
-    static final class Drafts implements DraftContract.DraftColumns {
+    static final class Drafts implements DraftsColumns {
         static final String TABLE = "drafts";
 
 

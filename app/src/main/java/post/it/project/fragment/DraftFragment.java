@@ -60,12 +60,12 @@ public class DraftFragment extends Fragment {
 
         final Context context = getContext();
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                adapter.setPost(new DraftDatabase(context).getAll());
-//            }
-//        })
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.setPost(new DraftDatabase(context).getAll());
+            }
+        });
 
 
         if (getDraftText("draft_text") != null) {
