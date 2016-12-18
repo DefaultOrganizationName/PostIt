@@ -10,5 +10,7 @@
     <string name="post_string">bla bla</string>
     <string name="post">POST</string>
 
+    <string name="during_post">Posting is performing</string>
+
     <string name="draft_string">DRAFT</string>
 </resources>

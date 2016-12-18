@@ -41,14 +41,14 @@ public class DraftsEntryAdapter extends RecyclerView.Adapter<DraftsEntryAdapter.
 
     @Override
     public void onBindViewHolder(DraftsViewHolder holder, int position) {
-        final DraftsEntry draft = posts.get(position);
-        holder.imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
-        holder.postView.setText(draft.post.post_text);
+//        final DraftsEntry draft = posts.get(position);
+//        holder.imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
+//        holder.postView.setText(draft.post.post_text);
     }
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        return 10;//posts.size();
     }
 
     static class DraftsViewHolder extends RecyclerView.ViewHolder {
