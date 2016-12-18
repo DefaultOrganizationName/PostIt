@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,8 @@ import static post.it.project.storage.PersistantStorage.getProperty;
 public class PostFragment extends Fragment {
     public static Post ppost;
 
+    private FragmentTransaction fTrans;
+    private int fContainer;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class PostFragment extends Fragment {
         Button post = (Button) rootView.findViewById(R.id.button);
         final EditText editTx = (EditText) rootView.findViewById(R.id.editText);
         ImageView iw = (ImageView) rootView.findViewById(R.id.imageView);
+        fContainer = R.id.fragmentContainer;
         iw.buildDrawingCache();
         final Bitmap bm = iw.getDrawingCache();
 
@@ -56,6 +61,10 @@ public class PostFragment extends Fragment {
 //                addDraftText("draft_text", editTx.getText().toString());
 //                ppost = new Post(new int[] {0, 0, 0, 0}, editTx.getText().toString(), bm);
 //                getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                fTrans = getFragmentManager().beginTransaction();
+                Fragment dpf = new DuringPostingFragment();
+                fTrans.add(fContainer, dpf);
+                fTrans.commit();
             }
         });
         return rootView;
