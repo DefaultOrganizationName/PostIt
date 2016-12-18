@@ -55,32 +55,38 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 addProperty("vk", b);
-                if (b) {
-                    Intent i = new Intent(getActivity(), LogIn.class);
-                    startActivity(i);
-                }
+                login(b);
             }
         });
         FB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 addProperty("fb", b);
+                login(b);
             }
         });
         OK.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 addProperty("ok", b);
+                login(b);
             }
         });
         IG.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 addProperty("insta", b);
+                login(b);
             }
         });
 
         return rootView;
     }
 
+    private void login(boolean b) {
+        if (b) {
+            Intent i = new Intent(getActivity(), LogIn.class);
+            startActivity(i);
+        }
+    }
 }
