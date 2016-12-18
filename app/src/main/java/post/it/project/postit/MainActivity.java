@@ -6,9 +6,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.EditText;
 
 import com.vk.sdk.VKSdk;
 
+import post.it.project.VK.Constants;
 import post.it.project.adapter.SectionsPagerAdapter;
 import post.it.project.database.DatabaseHelper;
 import post.it.project.storage.PersistantStorage;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

@@ -1,27 +1,25 @@
 package post.it.project.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import post.it.project.postit.MainActivity;
+import post.it.project.VK.Constants;
+import post.it.project.VK.VkActivity;
 import post.it.project.postit.Post;
 import post.it.project.postit.R;
+
 import static post.it.project.storage.PersistantStorage.addDraftText;
 import static post.it.project.storage.PersistantStorage.getProperty;
 
@@ -34,7 +32,6 @@ public class PostFragment extends Fragment {
     public static Post ppost;
 
     private FragmentTransaction fTrans;
-    private int fContainer;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,9 +39,8 @@ public class PostFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.post_fragment, container, false);
         TextView text = (TextView) rootView.findViewById(R.id.textInPost);
         Button post = (Button) rootView.findViewById(R.id.button);
-        final EditText editTx = (EditText) rootView.findViewById(R.id.editText);
+        final EditText editTx = (EditText) rootView.findViewById(R.id.eText);
         ImageView iw = (ImageView) rootView.findViewById(R.id.imageView);
-        fContainer = R.id.fragmentContainer;
         iw.buildDrawingCache();
         final Bitmap bm = iw.getDrawingCache();
 
@@ -65,10 +61,8 @@ public class PostFragment extends Fragment {
                 imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                 editTx.getText().clear();
 
-                fTrans = getFragmentManager().beginTransaction();
-                Fragment dpf = new DuringPostingFragment();
-                fTrans.add(fContainer, dpf);
-                fTrans.commit();
+                Intent i = new Intent(getActivity(), VkActivity.class);
+                startActivity(i);
             }
         });
         return rootView;

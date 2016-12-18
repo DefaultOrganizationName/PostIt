@@ -26,7 +26,7 @@
         <EditText
             android:layout_width="351dp"
             android:layout_height="214dp"
-            android:id="@+id/editText" />
+            android:id="@+id/eText" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="182dp"

@@ -16,6 +16,11 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.model.VKScopes;
+
+import post.it.project.VK.Constants;
 import post.it.project.postit.MainActivity;
 import post.it.project.postit.R;
 import post.it.project.storage.PersistantStorage;

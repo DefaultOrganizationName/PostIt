@@ -3,6 +3,8 @@ package post.it.project.postit;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
+import post.it.project.VK.Constants;
+
 /**
  * Created by Михаил on 09.12.2016.
  */
@@ -18,5 +20,6 @@ public class Post {
         this.networks = networks;
         this.post_text = post_text;
         this.image_bitmap = image_bitmap;
+        Constants.editText = post_text;
     }
 }
