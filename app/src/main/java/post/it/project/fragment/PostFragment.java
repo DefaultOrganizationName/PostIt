@@ -56,6 +56,7 @@ public class PostFragment extends Fragment {
 //                addDraftText("draft_text", editTx.getText().toString());
 //                ppost = new Post(new int[] {0, 0, 0, 0}, editTx.getText().toString(), bm);
 //                getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                // lol I am trying to merge changes
             }
         });
         return rootView;
