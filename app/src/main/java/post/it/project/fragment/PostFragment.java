@@ -58,9 +58,13 @@ public class PostFragment extends Fragment {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                addDraftText("draft_text", editTx.getText().toString());
-//                ppost = new Post(new int[] {0, 0, 0, 0}, editTx.getText().toString(), bm);
-//                getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                addDraftText("draft_text", editTx.getText().toString());
+                ppost = new Post(new int[] {0, 0, 0, 0}, editTx.getText().toString(), bm);
+                editTx.clearFocus();
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                editTx.getText().clear();
+
                 fTrans = getFragmentManager().beginTransaction();
                 Fragment dpf = new DuringPostingFragment();
                 fTrans.add(fContainer, dpf);
