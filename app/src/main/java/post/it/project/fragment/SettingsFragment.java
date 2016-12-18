@@ -3,6 +3,7 @@ package post.it.project.fragment;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.database.sqlite.SQLiteDatabase;
@@ -21,6 +22,7 @@ import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.model.VKScopes;
 
 import post.it.project.VK.Constants;
+import post.it.project.VK.LogIn;
 import post.it.project.postit.MainActivity;
 import post.it.project.postit.R;
 import post.it.project.storage.PersistantStorage;
@@ -53,6 +55,10 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 addProperty("vk", b);
+                if (b) {
+                    Intent i = new Intent(getActivity(), LogIn.class);
+                    startActivity(i);
+                }
             }
         });
         FB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

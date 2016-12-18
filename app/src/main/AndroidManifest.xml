@@ -12,6 +12,7 @@
         android:name="post.it.project.VK.VkApplication">
 
         <activity android:name="post.it.project.VK.VkActivity"/>
+        <activity android:name="post.it.project.VK.LogIn"/>
 
         <activity
             android:name=".MainActivity"

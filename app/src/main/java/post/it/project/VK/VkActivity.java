@@ -33,12 +33,14 @@ import post.it.project.postit.R;
 
 public class VkActivity extends Activity  {
 
-    private final String[] scopes = {VKScopes.WALL, VKScopes.PHOTOS};
+    public static final String[] scopes = {VKScopes.WALL, VKScopes.PHOTOS};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!VKSdk.wakeUpSession(this)) VKSdk.login(this, scopes);
+        if (!VKSdk.wakeUpSession(this)) {
+            Log.d(TAG, "need to go to the settings");
+        }
         else {
             Log.d(TAG, "I am logged in");
             //makePost(null, "first post with sdk!!!", 0);
