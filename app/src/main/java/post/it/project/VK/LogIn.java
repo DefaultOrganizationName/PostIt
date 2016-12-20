@@ -19,7 +19,8 @@ public class LogIn extends Activity {
         else {
             Log.d("LogIn", "I am logged in");
             //makePost(null, "first post with sdk!!!", 0);
-            //1 2 3 4 5
+            //5 4 3 2 1
+            //767676767
         }
     }
 }
