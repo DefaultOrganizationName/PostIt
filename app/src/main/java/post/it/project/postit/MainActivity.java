@@ -16,6 +16,9 @@ import post.it.project.adapter.SectionsPagerAdapter;
 import post.it.project.database.DatabaseHelper;
 import post.it.project.storage.PersistantStorage;
 
+import static post.it.project.storage.PersistantStorage.addProperty;
+import static post.it.project.storage.PersistantStorage.getProperty;
+
 public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -52,7 +55,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                mViewPager.getAdapter().notifyDataSetChanged();
+                //Если каждый раз обновлять то лагает
+                //TODO: СРОЧНО ПЕРЕДЕЛАТЬ
+                if (getProperty("update")) {
+                    mViewPager.getAdapter().notifyDataSetChanged();
+                    addProperty("update", false);
+                }
             }
 
             @Override

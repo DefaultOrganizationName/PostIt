@@ -31,7 +31,7 @@ public class DraftsEntryAdapter extends RecyclerView.Adapter<DraftsEntryAdapter.
 
     public void setPost(List<DraftsEntry> posts) {
         this.posts = posts;
-        notifyDataSetChanged();
+//        notifyDataSetChanged();
     }
 
     @Override
