@@ -1,12 +1,16 @@
 package post.it.project.postit;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.vk.sdk.VKSdk;
@@ -15,6 +19,7 @@ import post.it.project.VK.Constants;
 import post.it.project.adapter.SectionsPagerAdapter;
 import post.it.project.database.DatabaseHelper;
 import post.it.project.storage.PersistantStorage;
+import post.it.project.utils.Utils;
 
 import static post.it.project.storage.PersistantStorage.addProperty;
 import static post.it.project.storage.PersistantStorage.getProperty;
@@ -46,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-
+        final Activity activity = this;
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -57,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 //Если каждый раз обновлять то лагает
                 //TODO: СРОЧНО ПЕРЕДЕЛАТЬ
+                Utils.hidePhoneKeyboard(activity);
                 if (getProperty("update")) {
                     mViewPager.getAdapter().notifyDataSetChanged();
                     addProperty("update", false);

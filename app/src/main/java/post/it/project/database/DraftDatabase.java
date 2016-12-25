@@ -18,6 +18,8 @@ import post.it.project.exceptions.PostItDatabaseException;
 import post.it.project.postit.DraftsEntry;
 import post.it.project.postit.Post;
 
+import static com.vk.sdk.VKUIHelper.getApplicationContext;
+
 /**
  * Created by Михаил on 14.12.2016.
  */
@@ -31,8 +33,8 @@ public class DraftDatabase {
     }
 
     @WorkerThread
-    public void put(@NonNull DraftsEntry entry) throws PostItDatabaseException {
-        SQLiteDatabase db = DatabaseHelper.getInstance(context).getWritableDatabase();
+    public static void put(@NonNull DraftsEntry entry) throws PostItDatabaseException {
+        SQLiteDatabase db = DatabaseHelper.getInstance(getApplicationContext()).getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(DatabaseContract.Drafts._ID, entry.id);
         cv.put(DatabaseContract.Drafts.POST_TEXT, entry.post.post_text);
