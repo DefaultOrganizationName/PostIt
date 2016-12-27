@@ -93,7 +93,7 @@ public class DraftDatabase {
     @WorkerThread
     public void delete(DraftsEntry entry) {
         SQLiteDatabase db = DatabaseHelper.getInstance(context).getWritableDatabase();
-        db.execSQL("DELETE FROM" + DatabaseContract.Drafts.TABLE + " WHERE " + DatabaseContract.Drafts._ID + "=" + entry.id);
+        db.execSQL("DELETE FROM " + DatabaseContract.Drafts.TABLE + " WHERE " + DatabaseContract.Drafts._ID + "=" + entry.id);
     }
 
 }

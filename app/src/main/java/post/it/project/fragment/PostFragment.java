@@ -49,6 +49,7 @@ public class PostFragment extends Fragment {
     EditText editTx;
     TextView text;
     Bitmap temp;
+    Post postForNetwork;
     private FragmentTransaction fTrans;
 
     @Override
@@ -94,6 +95,9 @@ public class PostFragment extends Fragment {
                 if (!editTx.getText().toString().equals("\\s*")) {
                     addDraftText("draft_text", editTx.getText().toString());
 //                    ppost = new Post(new int[]{0, 0, 0, 0}, editTx.getText().toString(), bm);
+
+                    postForNetwork = new Post(getNetworks(), editTx.getText().toString(), temp);
+
                     editTx.clearFocus();
                     Utils.hidePhoneKeyboard(getActivity());
                     editTx.getText().clear();
