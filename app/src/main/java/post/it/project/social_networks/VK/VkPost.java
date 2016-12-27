@@ -20,14 +20,15 @@ import com.vk.sdk.api.model.VKWallPostResult;
 import com.vk.sdk.api.photo.VKImageParameters;
 import com.vk.sdk.api.photo.VKUploadImage;
 
+import post.it.project.postit.R;
 import post.it.project.social_networks.Constants;
 import post.it.project.social_networks.PostToNetworksService;
 import post.it.project.social_networks.SocialNetworksActivity;
 
 public class VkPost extends PostToNetworksService implements Runnable{
 
-    private final Bitmap photo;
-    private final String message;
+    private Bitmap photo = null;
+    private String message = null;
 
     public VkPost(Bitmap photo, String message) {
         this.photo = photo;
@@ -41,14 +42,16 @@ public class VkPost extends PostToNetworksService implements Runnable{
             @Override
             public void onComplete(VKResponse response) {
                 // recycle bitmap
+                Log.d(TAG, "loading photo is finished!");
                 VKApiPhoto photoModel = ((VKPhotoArray) response.parsedModel).get(0);
                 makePost(new VKAttachments(photoModel), message, getMyId());
-                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
-                sendBroadcast(intent);
+//                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
+//                sendBroadcast(intent);
             }
             @Override
             public void onError(VKError error) {
-                //need to parse error
+                Log.d(TAG, "can not load photo :-(");
+                Log.d(TAG, error.toString());
             }
 
         });
@@ -71,14 +74,14 @@ public class VkPost extends PostToNetworksService implements Runnable{
             @Override
             public void onComplete(VKResponse response) {
                 Log.d(TAG, "post is posted");
-                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
-                sendBroadcast(intent);
+//                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
+//                sendBroadcast(intent);
             }
             @Override
             public void onError(VKError error) {
                 Log.d(TAG, "error!");
-                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
-                sendBroadcast(intent);
+//                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
+//                sendBroadcast(intent);
             }
         });
     }
@@ -87,12 +90,9 @@ public class VkPost extends PostToNetworksService implements Runnable{
 
     @Override
     public void run() {
-        Log.d(TAG, "ready to post!");
-        if (Constants.HAVE_PHOTO) {
-            loadPhotoToMyWall(photo, message);
-        } else if (Constants.HAVE_PHOTO) {
-            makePost(null, message, getMyId());
-        }
+        Log.d(TAG, "ready to post: ".concat(message));
+        if (photo != null) loadPhotoToMyWall(photo, message);
+        else makePost(null, message, getMyId());
     }
 
 

@@ -1,8 +1,10 @@
 package post.it.project.social_networks;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -21,6 +23,7 @@ import com.vk.sdk.api.model.VKWallPostResult;
 import com.vk.sdk.api.photo.VKImageParameters;
 import com.vk.sdk.api.photo.VKUploadImage;
 
+import post.it.project.postit.ParcelablePost;
 import post.it.project.postit.Post;
 import post.it.project.postit.R;
 import post.it.project.social_networks.VK.VkPost;
@@ -40,35 +43,15 @@ public class SocialNetworksActivity extends AbstractSocialNetworks {
         setContentView(R.layout.status);
         super.setComponents();
         Intent aboveIntent = getIntent();
-        Post post = aboveIntent.getParcelableExtra(Constants.CURRENT_POST_KEY);
-
-        //TODO add more networks
-
-        if (!VKSdk.wakeUpSession(this)) {
-            Log.d(TAG, "need to go to the settings");
-            super.setText(R.string.status_not_logged_in);
-        }
-        else {
-            Log.d(TAG, "I am logged in");
-            Intent intent = new Intent(this, PostToNetworksService.class);
-            try {
-                intent.putExtra(Constants.PHOTO_KEY, post.image_bitmap);
-                Constants.HAVE_PHOTO = true;
-            } catch (NullPointerException e) {
-                Log.d(TAG, "Don't have image");
-                Constants.HAVE_PHOTO = false;
-            }
-            try {
-                intent.putExtra(Constants.MESSAGE_KEY, post.post_text);
-                Constants.HAVE_TEXT = true;
-            } catch (NullPointerException e) {
-                Log.d(TAG, "Don't have text");
-                Constants.HAVE_TEXT = false;
-            }
-            startService(intent);
-        }
+        final Post post = aboveIntent.getParcelableExtra(Constants.CURRENT_POST_KEY);
+        Intent intent = new Intent(this, PostToNetworksService.class);
+        //intent.putExtra(Constants.CURRENT_POST_KEY, post);
+        Log.d(TAG, post.post_text);
+        VkPost request = new VkPost(post.image_bitmap, post.post_text);
+        Thread t = new Thread(request);
+        t.start();
+        //startService(intent);
     }
-
 
     private final String TAG = "NetworksActivity";
 }

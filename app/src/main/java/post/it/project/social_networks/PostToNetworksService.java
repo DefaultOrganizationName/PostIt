@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import post.it.project.postit.Post;
 import post.it.project.social_networks.VK.VkPost;
 
 /**
@@ -24,11 +25,8 @@ public class PostToNetworksService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "Service is started!");
-        Bitmap photo = null;
-        if (Constants.HAVE_PHOTO) photo = intent.getParcelableExtra(Constants.PHOTO_KEY);
-        String message = null;
-        if (Constants.HAVE_TEXT) message = intent.getStringExtra(Constants.MESSAGE_KEY);
-        VkPost request = new VkPost(photo, message);
+        Post p = intent.getParcelableExtra(Constants.CURRENT_POST_KEY);
+        VkPost request = new VkPost(p.image_bitmap, p.post_text);
         new Thread(request).start();
         return super.onStartCommand(intent, flags, startId);
     }
