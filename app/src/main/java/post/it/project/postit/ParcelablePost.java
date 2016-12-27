@@ -9,18 +9,18 @@ import android.os.Parcelable;
  */
 
 public class ParcelablePost extends Post implements Parcelable {
-    public ParcelablePost(int[] networks, String post_text, Bitmap image_bitmap) {
-        super(networks, post_text, image_bitmap);
+    public ParcelablePost(int[] networks, String post_text, String image_path) {
+        super(networks, post_text, image_path);
     }
 
     public ParcelablePost(Post post) {
-        super(post.networks, post.post_text, post.image_bitmap);
+        super(post.networks, post.post_text, post.image_path);
     }
 
     protected ParcelablePost(Parcel in) {
         super(in.createIntArray(),
                 in.readString(),
-                (Bitmap) in.readParcelable(Bitmap.class.getClassLoader()));
+                in.readString());
     }
 
     public static final Creator<ParcelablePost> CREATOR = new Creator<ParcelablePost>() {
@@ -44,6 +44,6 @@ public class ParcelablePost extends Post implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeIntArray(networks);
         dest.writeString(post_text);
-        dest.writeParcelable(image_bitmap, 0);
+        dest.writeString(image_path);
     }
 }

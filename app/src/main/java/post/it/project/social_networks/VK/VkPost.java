@@ -22,11 +22,8 @@ import com.vk.sdk.api.photo.VKImageParameters;
 import com.vk.sdk.api.photo.VKUploadImage;
 
 import post.it.project.postit.R;
-import post.it.project.social_networks.Constants;
 import post.it.project.social_networks.PostToNetworksService;
-import post.it.project.social_networks.Response;
 import post.it.project.social_networks.ResultType;
-import post.it.project.social_networks.SocialNetworksActivity;
 import post.it.project.utils.Utils;
 
 public class VkPost extends PostToNetworksService implements Runnable {
@@ -50,10 +47,11 @@ public class VkPost extends PostToNetworksService implements Runnable {
                 // recycle bitmap
                 Log.d(TAG, "loading photo is finished!");
                 VKApiPhoto photoModel = ((VKPhotoArray) response.parsedModel).get(0);
-                Intent i = Utils.makeResponse(ResultType.OK, R.string.vk, "Photo is uploaded");
-                context.sendBroadcast(i);
                 makePost(new VKAttachments(photoModel), message, getMyId());
-
+                if (message == null) {
+                    Intent i = Utils.makeResponse(ResultType.OK, R.string.vk, "Photo is uploaded");
+                    context.sendBroadcast(i);
+                }
             }
 
             @Override
@@ -61,7 +59,7 @@ public class VkPost extends PostToNetworksService implements Runnable {
                 Log.d(TAG, "can not load photo :-(");
                 Log.d(TAG, error.toString());
                 Log.d(TAG, "error!");
-                if (Utils.isConnectionAvailable(getApplicationContext(), true))
+                if (!Utils.isConnectionAvailable(context.getApplicationContext(), true))
                     context.sendBroadcast(Utils.makeResponse(ResultType.ERROR, R.string.vk, "Check your internet connection"));
                 else
                     context.sendBroadcast(Utils.makeResponse(ResultType.ERROR, R.string.vk, "Something went wrong"));

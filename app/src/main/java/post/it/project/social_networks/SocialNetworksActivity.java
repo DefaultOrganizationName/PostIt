@@ -41,6 +41,8 @@ public class SocialNetworksActivity extends AbstractSocialNetworks {
 
     public static String BROADCAST_ACTION = "MY_BROADCAST_FOR_POSTING";
 
+    private BroadcastReceiver answerCatcher;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +52,14 @@ public class SocialNetworksActivity extends AbstractSocialNetworks {
         final ParcelablePost post = aboveIntent.getParcelableExtra(Constants.CURRENT_POST_KEY);
 
         //making broadcast
-        BroadcastReceiver answerCatcher = new BroadcastReceiver() {
+        answerCatcher = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 stateText.setVisibility(View.INVISIBLE);
                 Response answer = intent.getParcelableExtra(Constants.ANSWER_OF_POST_SERVICE);
                 TextView tv = makeTextView(answer.nameOfNetwork);
+                tv.append(" ");
+                tv.append(answer.message);
                 textContainer.addView(tv);
             }
         };
@@ -68,6 +72,12 @@ public class SocialNetworksActivity extends AbstractSocialNetworks {
         intent.putExtra(Constants.CURRENT_POST_KEY, post);
         Log.d(TAG, post.post_text);
         startService(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(answerCatcher);
     }
 
     private final String TAG = "NetworksActivity";

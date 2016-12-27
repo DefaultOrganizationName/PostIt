@@ -37,7 +37,7 @@ public abstract class AbstractSocialNetworks extends Activity implements View.On
     public TextView makeTextView(int name) {
         TextView tv = new TextView(getApplicationContext());
         tv.setText(name);
-        //String s = tv.getText().toString();
+        tv.setTextSize(20);
         return tv;
     }
 
