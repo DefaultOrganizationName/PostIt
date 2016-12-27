@@ -66,6 +66,7 @@ public class PostFragment extends Fragment {
     protected Post postForNetwork;
     private static final int PERMISSION_REQUEST = 1;
     File f;
+    Button clear;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class PostFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.post_fragment, container, false);
         Button camera = (Button) rootView.findViewById(R.id.new_post_camera_button);
         Button gallery = (Button) rootView.findViewById(R.id.new_post_gallery_button);
+        clear = (Button) rootView.findViewById(R.id.clear);
         final Button post = (Button) rootView.findViewById(R.id.button);
         editTx = (EditText) rootView.findViewById(R.id.eText);
 
@@ -100,7 +102,14 @@ public class PostFragment extends Fragment {
 
         image_path = null;
 //        temp = Bitmap.createBitmap(iw.getDrawingCache());
-
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iw.setImageBitmap(standart);
+                image_path = null;
+                setVisible(0);
+            }
+        });
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,7 +137,7 @@ public class PostFragment extends Fragment {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!editTx.getText().toString().equals("\\s*")) {
+                if (!isEmpty(editTx) || image_path != null) {
                     addDraftText("draft_text", editTx.getText().toString());
 //                    ppost = new Post(new int[]{0, 0, 0, 0}, editTx.getText().toString(), bm);
 
@@ -174,6 +183,7 @@ public class PostFragment extends Fragment {
         iw.setImageBitmap(standart);
         image_path = null;
         Utils.hidePhoneKeyboard(getActivity());
+        setVisible(0);
     }
 
     public void addToDrafts(Post post) {
@@ -202,6 +212,16 @@ public class PostFragment extends Fragment {
 //        }
 //    }
 
+    public void setVisible(int flag) {
+        switch (flag) {
+            case 1:
+                clear.setVisibility(View.VISIBLE);
+                break;
+            case 0:
+                clear.setVisibility(View.INVISIBLE);
+                break;
+        }
+    }
 
     public int[] getNetworks() {
         int[] ans = {(getProperty("vk") ? 1 : 0), (getProperty("ok") ? 1 : 0)};
@@ -258,6 +278,7 @@ public class PostFragment extends Fragment {
             image_path = picturePath;
             temp = loadedBitmap;
             iw.setImageBitmap(loadedBitmap);
+            setVisible(1);
         }
 
     }
