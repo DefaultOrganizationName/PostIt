@@ -26,7 +26,7 @@ public class PostToNetworksService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "Service is started!");
         Post p = intent.getParcelableExtra(Constants.CURRENT_POST_KEY);
-        VkPost request = new VkPost(p.image_bitmap, p.post_text);
+        VkPost request = new VkPost(p.image_bitmap, p.post_text, this);
         new Thread(request).start();
         return super.onStartCommand(intent, flags, startId);
     }

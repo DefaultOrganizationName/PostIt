@@ -1,12 +1,16 @@
 package post.it.project.social_networks;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKSdk;
@@ -43,14 +47,27 @@ public class SocialNetworksActivity extends AbstractSocialNetworks {
         setContentView(R.layout.status);
         super.setComponents();
         Intent aboveIntent = getIntent();
-        final Post post = aboveIntent.getParcelableExtra(Constants.CURRENT_POST_KEY);
+        final ParcelablePost post = aboveIntent.getParcelableExtra(Constants.CURRENT_POST_KEY);
+
+        //making broadcast
+        BroadcastReceiver answerCatcher = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                stateText.setVisibility(View.INVISIBLE);
+                Response answer = intent.getParcelableExtra(Constants.ANSWER_OF_POST_SERVICE);
+                TextView tv = makeTextView(answer.nameOfNetwork);
+                textContainer.addView(tv);
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
+        registerReceiver(answerCatcher, intentFilter);
+
+        //starting service
         Intent intent = new Intent(this, PostToNetworksService.class);
-        //intent.putExtra(Constants.CURRENT_POST_KEY, post);
+        if (post == null) Log.d(TAG, "post is null");
+        intent.putExtra(Constants.CURRENT_POST_KEY, post);
         Log.d(TAG, post.post_text);
-        VkPost request = new VkPost(post.image_bitmap, post.post_text);
-        Thread t = new Thread(request);
-        t.start();
-        //startService(intent);
+        startService(intent);
     }
 
     private final String TAG = "NetworksActivity";

@@ -30,6 +30,7 @@ public class LogIn extends AbstractSocialNetworks {
         if (!VKSdk.wakeUpSession(this)) {
             super.setText(R.string.status_not_logged_in);
             VKSdk.login(this, scopes);
+            super.setText(R.string.status_logged_in);
         }
         else {
             Log.d("LogIn", "I am logged in");

@@ -32,7 +32,7 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
 //        SharedPreferences preferences = this.getActivity().getSharedPreferences(PersistantStorage.STORAGE_NAME, Context.MODE_PRIVATE);
         final View rootView = inflater.inflate(R.layout.settings_fragment, container, false);
-        Switch VK = (Switch) rootView.findViewById(R.id.vk);
+        final Switch VK = (Switch) rootView.findViewById(R.id.vk);
         Switch FB = (Switch) rootView.findViewById(R.id.fb);
         Switch OK = (Switch) rootView.findViewById(R.id.ok);
         Switch IG = (Switch) rootView.findViewById(R.id.insta);
@@ -74,7 +74,8 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 VKSdk.logout();
-
+                VK.setChecked(false);
+                //TODO another networks
             }
         };
         logout.setOnClickListener(listener);
@@ -86,6 +87,7 @@ public class SettingsFragment extends Fragment {
         if (b) {
             Intent i = new Intent(getActivity(), LogIn.class);
             startActivity(i);
+            //TODO another networks
         }
     }
 }
