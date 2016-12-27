@@ -23,8 +23,7 @@ import static post.it.project.storage.PersistantStorage.getProperty;
 public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
-    boolean[] networks;
+    public static ViewPager mViewPager;
     public static DatabaseHelper dbHelper;
     PersistantStorage netStorage;
     SharedPreferences networksState;
@@ -33,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        networks = new boolean[4];
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

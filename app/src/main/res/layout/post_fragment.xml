@@ -62,10 +62,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="2">
             <Button
-                android:text="@string/post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/button" />
+                android:id="@+id/button"
+                android:background="?android:attr/selectableItemBackground"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_post"/>
         </FrameLayout>
         <FrameLayout
             android:layout_width="0dp"

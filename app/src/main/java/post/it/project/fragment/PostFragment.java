@@ -1,7 +1,9 @@
 package post.it.project.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,8 +13,11 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +59,7 @@ public class PostFragment extends Fragment {
     public static Bitmap temp;
     Post postForNetwork;
     private FragmentTransaction fTrans;
+    private static final int PERMISSION_REQUEST = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,17 +78,25 @@ public class PostFragment extends Fragment {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePicture, 0);
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
+                } else {
+                    Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePicture, 0);
+                }
             }
         });
 
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto, 1);
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
+                } else {
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto, 1);
+                }
             }
         });
         post.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +106,7 @@ public class PostFragment extends Fragment {
                     addDraftText("draft_text", editTx.getText().toString());
 //                    ppost = new Post(new int[]{0, 0, 0, 0}, editTx.getText().toString(), bm);
 
-                    postForNetwork = new Post(getNetworks(), editTx.getText().toString(), temp);
+                    postForNetwork = new Post(getNetworks(), editTx.getText().toString(), Bitmap.createBitmap(((BitmapDrawable) iw.getDrawable()).getBitmap()));
 
                     editTx.clearFocus();
                     Utils.hidePhoneKeyboard(getActivity());
@@ -160,7 +174,6 @@ public class PostFragment extends Fragment {
 //    }
 
 
-
     public int[] getNetworks() {
         int[] ans = {(getProperty("vk") ? 1 : 0), (getProperty("ok") ? 1 : 0)};
         return ans;
@@ -175,6 +188,7 @@ public class PostFragment extends Fragment {
 //
             // Get selected gallery image
             Uri selectedPicture = data.getData();
+            Log.d(LOG_TAG, "data state: " + selectedPicture);
             // Get and resize profile image
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getActivity().getContentResolver().query(selectedPicture, filePathColumn, null, null, null);
@@ -211,7 +225,7 @@ public class PostFragment extends Fragment {
                     loadedBitmap = rotateBitmap(loadedBitmap, 270);
                     break;
             }
-            temp = Bitmap.createBitmap(loadedBitmap);
+            temp = loadedBitmap;
             iw.setImageBitmap(loadedBitmap);
         }
 
@@ -223,5 +237,5 @@ public class PostFragment extends Fragment {
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
-
+    String LOG_TAG = "PostFragment";
 }

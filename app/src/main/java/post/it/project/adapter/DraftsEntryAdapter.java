@@ -7,13 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
+import post.it.project.database.DraftDatabase;
 import post.it.project.fragment.PostFragment;
 import post.it.project.postit.DraftsEntry;
+import post.it.project.postit.MainActivity;
 import post.it.project.postit.R;
 
 /**
@@ -46,6 +49,20 @@ public class DraftsEntryAdapter extends RecyclerView.Adapter<DraftsEntryAdapter.
         holder.imageView.setImageBitmap(draft.post.image_bitmap);
 //        holder.imageView.setImageBitmap(((BitmapDrawable) PostFragment.iw.getDrawable()).getBitmap());
         holder.postView.setText(draft.post.post_text);
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DraftDatabase.delete(draft);
+                MainActivity.mViewPager.getAdapter().notifyDataSetChanged();
+            }
+        });
+
+        holder.postBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
@@ -59,10 +76,15 @@ public class DraftsEntryAdapter extends RecyclerView.Adapter<DraftsEntryAdapter.
     static class DraftsViewHolder extends RecyclerView.ViewHolder {
         final TextView postView;
         final ImageView imageView;
+        final Button deleteBtn;
+        final Button postBtn;
+
         DraftsViewHolder(View itemView) {
             super(itemView);
             postView = (TextView) itemView.findViewById(R.id.textView);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
+            deleteBtn = (Button) itemView.findViewById(R.id.deleteBtn);
+            postBtn = (Button) itemView.findViewById(R.id.postBtn);
         }
 
         static DraftsViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {

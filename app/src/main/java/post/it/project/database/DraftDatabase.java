@@ -54,7 +54,6 @@ public class DraftDatabase {
 //        ByteBuffer dst = ByteBuffer.allocate(lenght);
 //        bmp.copyPixelsToBuffer(dst);
 //        byte[] byteArray = dst.array();
-        Log.d("AAASFASFASF", "----- " + Arrays.toString(byteArray));
         cv.put(DatabaseContract.Drafts.POST_IMAGE, byteArray);
 
         cv.put(DatabaseContract.Drafts.VK_STATE, entry.post.networks[0]);
@@ -92,7 +91,6 @@ public class DraftDatabase {
 //                    int fb_state = cursor.getInt(i++);
 //                    int insta_state = cursor.getInt(i++);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-                    Log.d(LOG_TAG, "---- " + Arrays.toString(image));
                     int[] networks = {vk_state, ok_state};
                     DraftsEntry entry = new DraftsEntry(id, new Post(networks, text, bitmap));
                     draftsEntries.add(entry);
@@ -103,8 +101,8 @@ public class DraftDatabase {
     }
 
     @WorkerThread
-    public void delete(DraftsEntry entry) {
-        SQLiteDatabase db = DatabaseHelper.getInstance(context).getWritableDatabase();
+    public static void delete(DraftsEntry entry) {
+        SQLiteDatabase db = DatabaseHelper.getInstance(getApplicationContext()).getWritableDatabase();
         db.execSQL("DELETE FROM " + DatabaseContract.Drafts.TABLE + " WHERE " + DatabaseContract.Drafts._ID + "=" + entry.id);
     }
     String LOG_TAG = "DraftDatabase";
