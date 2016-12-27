@@ -1,6 +1,7 @@
 package post.it.project.social_networks.VK;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.nfc.Tag;
@@ -29,6 +30,8 @@ public class VkPost extends PostToNetworksService implements Runnable{
 
     private Bitmap photo = null;
     private String message = null;
+    private Context context;
+
 
     public VkPost(Bitmap photo, String message) {
         this.photo = photo;
@@ -45,8 +48,8 @@ public class VkPost extends PostToNetworksService implements Runnable{
                 Log.d(TAG, "loading photo is finished!");
                 VKApiPhoto photoModel = ((VKPhotoArray) response.parsedModel).get(0);
                 makePost(new VKAttachments(photoModel), message, getMyId());
-//                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
-//                sendBroadcast(intent);
+                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
+                context.sendBroadcast(intent);
             }
             @Override
             public void onError(VKError error) {
@@ -74,14 +77,14 @@ public class VkPost extends PostToNetworksService implements Runnable{
             @Override
             public void onComplete(VKResponse response) {
                 Log.d(TAG, "post is posted");
-//                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
-//                sendBroadcast(intent);
+                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
+                context.sendBroadcast(intent);
             }
             @Override
             public void onError(VKError error) {
                 Log.d(TAG, "error!");
-//                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
-//                sendBroadcast(intent);
+                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
+                context.sendBroadcast(intent);
             }
         });
     }
