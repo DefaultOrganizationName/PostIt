@@ -9,10 +9,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="post.it.project.VK.VkApplication">
+        android:name="post.it.project.social_networks.VK.VkApplication">
 
-        <activity android:name="post.it.project.VK.VkActivity"/>
-        <activity android:name="post.it.project.VK.LogIn"/>
+        <activity android:name="post.it.project.social_networks.VK.LogIn"/>
+        <activity android:name="post.it.project.social_networks.SocialNetworksActivity"/>
 
         <activity
             android:name=".MainActivity"

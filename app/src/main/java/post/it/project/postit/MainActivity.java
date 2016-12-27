@@ -11,7 +11,6 @@ import android.widget.EditText;
 
 import com.vk.sdk.VKSdk;
 
-import post.it.project.VK.Constants;
 import post.it.project.adapter.SectionsPagerAdapter;
 import post.it.project.database.DatabaseHelper;
 import post.it.project.storage.PersistantStorage;

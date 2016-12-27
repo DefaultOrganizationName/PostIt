@@ -19,6 +19,5 @@ public class Post {
         this.networks = networks;
         this.post_text = post_text;
         this.image_bitmap = image_bitmap;
-        Constants.editText = post_text;
     }
 }

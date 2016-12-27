@@ -5,5 +5,10 @@ package post.it.project.social_networks;
  */
 
 public class Constants {
-    public static String editText;
+    public static String PHOTO_KEY = "BITMAP_PHOTO_KEY";
+    public static String MESSAGE_KEY = "STRING_MESSAGE_KEY";
+    public static String CURRENT_POST_KEY = "MESSAGE_AND_PHOTO_KEY";
+    public static boolean HAVE_PHOTO = false;
+    public static boolean HAVE_TEXT = false;
+
 }

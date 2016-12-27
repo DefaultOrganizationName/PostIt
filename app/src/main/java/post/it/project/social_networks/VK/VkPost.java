@@ -1,7 +1,9 @@
 package post.it.project.social_networks.VK;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.nfc.Tag;
 import android.util.Log;
 
 import com.vk.sdk.VKAccessToken;
@@ -18,10 +20,11 @@ import com.vk.sdk.api.model.VKWallPostResult;
 import com.vk.sdk.api.photo.VKImageParameters;
 import com.vk.sdk.api.photo.VKUploadImage;
 
-import post.it.project.postit.R;
 import post.it.project.social_networks.Constants;
+import post.it.project.social_networks.PostToNetworksService;
+import post.it.project.social_networks.SocialNetworksActivity;
 
-public class VkPost implements Runnable{
+public class VkPost extends PostToNetworksService implements Runnable{
 
     private final Bitmap photo;
     private final String message;
@@ -32,6 +35,7 @@ public class VkPost implements Runnable{
     }
 
     private void loadPhotoToMyWall(final Bitmap photo, final String message) {
+        Log.d(TAG, "loading photo to my wall");
         VKRequest request = VKApi.uploadWallPhotoRequest(new VKUploadImage(photo, VKImageParameters.jpgImage(0.9f)), getMyId(), 0);
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
@@ -39,10 +43,12 @@ public class VkPost implements Runnable{
                 // recycle bitmap
                 VKApiPhoto photoModel = ((VKPhotoArray) response.parsedModel).get(0);
                 makePost(new VKAttachments(photoModel), message, getMyId());
+                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
+                sendBroadcast(intent);
             }
             @Override
             public void onError(VKError error) {
-                // error
+                //need to parse error
             }
 
         });
@@ -54,6 +60,7 @@ public class VkPost implements Runnable{
     }
 
     private void makePost(VKAttachments att, String msg, int id) {
+        Log.d(TAG, "making post and final request");
         VKParameters parameters = new VKParameters();
         parameters.put(VKApiConst.OWNER_ID, String.valueOf(id));
         if (att != null) parameters.put(VKApiConst.ATTACHMENTS, att);
@@ -64,10 +71,14 @@ public class VkPost implements Runnable{
             @Override
             public void onComplete(VKResponse response) {
                 Log.d(TAG, "post is posted");
+                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
+                sendBroadcast(intent);
             }
             @Override
             public void onError(VKError error) {
                 Log.d(TAG, "error!");
+                Intent intent = new Intent(SocialNetworksActivity.BROADCAST_ACTION);
+                sendBroadcast(intent);
             }
         });
     }
@@ -76,8 +87,12 @@ public class VkPost implements Runnable{
 
     @Override
     public void run() {
-        if (photo != null) loadPhotoToMyWall(photo, message);
-        else makePost(null, Constants.editText, getMyId());
+        Log.d(TAG, "ready to post!");
+        if (Constants.HAVE_PHOTO) {
+            loadPhotoToMyWall(photo, message);
+        } else if (Constants.HAVE_PHOTO) {
+            makePost(null, message, getMyId());
+        }
     }
 
 
