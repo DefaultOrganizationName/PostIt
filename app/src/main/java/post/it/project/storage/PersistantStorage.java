@@ -59,4 +59,19 @@ public class PersistantStorage {
 
         return settings.getBoolean(name, false);
     }
+
+    public static void setID(String name, int id) {
+        if (settings == null) {
+            init();
+        }
+        editor.putInt(name, id);
+        editor.commit();
+    }
+
+    public static int getID(String name) {
+        if (settings == null) {
+            init();
+        }
+        return settings.getInt(name, 0);
+    }
 }

@@ -1,5 +1,6 @@
 package post.it.project.postit;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -14,6 +15,10 @@ import com.vk.sdk.VKSdk;
 import post.it.project.adapter.SectionsPagerAdapter;
 import post.it.project.database.DatabaseHelper;
 import post.it.project.storage.PersistantStorage;
+import post.it.project.utils.Utils;
+
+import static post.it.project.storage.PersistantStorage.addProperty;
+import static post.it.project.storage.PersistantStorage.getProperty;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
 
+        final Activity activity = this;
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -51,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                mViewPager.getAdapter().notifyDataSetChanged();
+                Utils.hidePhoneKeyboard(activity);
+                if (getProperty("update")) {
+                    mViewPager.getAdapter().notifyDataSetChanged();
+                    addProperty("update", false);
+                }
             }
 
             @Override

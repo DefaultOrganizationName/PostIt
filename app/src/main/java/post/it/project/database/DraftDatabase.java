@@ -9,10 +9,14 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.AnyThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import post.it.project.exceptions.PostItDatabaseException;
@@ -43,14 +47,14 @@ public class DraftDatabase {
 
         //get image as byte array to put in SQL table (BLOB)
         Bitmap bmp = Bitmap.createBitmap(entry.post.image_bitmap);
-//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//        bmp.compress(Bitmap.CompressFormat.PNG, 0, stream);
-//        byte[] byteArray = stream.toByteArray();
-        final int lenght = bmp.getByteCount();
-        ByteBuffer dst = ByteBuffer.allocate(lenght);
-        bmp.copyPixelsToBuffer(dst);
-        byte[] byteArray = dst.array();
-
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        byte[] byteArray = stream.toByteArray();
+//        final int lenght = bmp.getByteCount();
+//        ByteBuffer dst = ByteBuffer.allocate(lenght);
+//        bmp.copyPixelsToBuffer(dst);
+//        byte[] byteArray = dst.array();
+        Log.d("AAASFASFASF", "----- " + Arrays.toString(byteArray));
         cv.put(DatabaseContract.Drafts.POST_IMAGE, byteArray);
 
         cv.put(DatabaseContract.Drafts.VK_STATE, entry.post.networks[0]);
@@ -84,10 +88,11 @@ public class DraftDatabase {
                     String text = cursor.getString(i++);
                     byte[] image = cursor.getBlob(i++);
                     int vk_state = cursor.getInt(i++);
-                    int ok_state = cursor.getInt(i++);
+                    int ok_state = cursor.getInt(i);
 //                    int fb_state = cursor.getInt(i++);
 //                    int insta_state = cursor.getInt(i++);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+                    Log.d(LOG_TAG, "---- " + Arrays.toString(image));
                     int[] networks = {vk_state, ok_state};
                     DraftsEntry entry = new DraftsEntry(id, new Post(networks, text, bitmap));
                     draftsEntries.add(entry);
@@ -102,5 +107,5 @@ public class DraftDatabase {
         SQLiteDatabase db = DatabaseHelper.getInstance(context).getWritableDatabase();
         db.execSQL("DELETE FROM " + DatabaseContract.Drafts.TABLE + " WHERE " + DatabaseContract.Drafts._ID + "=" + entry.id);
     }
-
+    String LOG_TAG = "DraftDatabase";
 }

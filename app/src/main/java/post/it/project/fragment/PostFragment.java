@@ -34,7 +34,9 @@ import post.it.project.utils.Utils;
 
 import static post.it.project.storage.PersistantStorage.addDraftText;
 import static post.it.project.storage.PersistantStorage.addProperty;
+import static post.it.project.storage.PersistantStorage.getID;
 import static post.it.project.storage.PersistantStorage.getProperty;
+import static post.it.project.storage.PersistantStorage.setID;
 
 /**
  * Created by Михаил on 09.12.2016.
@@ -46,7 +48,7 @@ public class PostFragment extends Fragment {
 
     private final static int PICK_PHOTO_FROM_GALLERY = 123;
     private final static int REQUEST_PHOTO_FROM_CAMERA = 456;
-    ImageView iw;
+    public static ImageView iw;
     EditText editTx;
     TextView text;
     public static Bitmap temp;
@@ -110,7 +112,7 @@ public class PostFragment extends Fragment {
                     if (nw[0] == 0 && nw[1] == 0) {
                         return true;
                     } else {
-
+                        addProperty("update", true);
                         addToDrafts(new Post(getNetworks(), editTx.getText().toString(), temp));
                         clear();
                     }
@@ -131,20 +133,33 @@ public class PostFragment extends Fragment {
         Utils.hidePhoneKeyboard(getActivity());
     }
 
-    private int id = 0;
-
     public void addToDrafts(Post post) {
-        boolean flag = true;
-        while (flag) {
-            DraftsEntry draft = new DraftsEntry(id++, post);
-            try {
-                DraftDatabase.put(draft);
-                flag = false;
-            } catch (PostItDatabaseException e) {
-                //Nothing
-            }
+        try {
+            int id = getID("ID");
+            setID("ID", id + 1);
+            DraftsEntry draft = new DraftsEntry(id, post);
+            DraftDatabase.put(draft);
+        } catch (PostItDatabaseException e) {
+            e.printStackTrace();
         }
     }
+
+//    private int id = 0;
+//
+//    public void addToDrafts(Post post) {
+//        boolean flag = true;
+//        while (flag) {
+//            DraftsEntry draft = new DraftsEntry(id++, post);
+//            try {
+//                DraftDatabase.put(draft);
+//                flag = false;
+//            } catch (PostItDatabaseException e) {
+//                //Nothing
+//            }
+//        }
+//    }
+
+
 
     public int[] getNetworks() {
         int[] ans = {(getProperty("vk") ? 1 : 0), (getProperty("ok") ? 1 : 0)};

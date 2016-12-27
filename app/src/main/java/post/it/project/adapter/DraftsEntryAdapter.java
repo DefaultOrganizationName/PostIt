@@ -2,6 +2,7 @@ package post.it.project.adapter;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class DraftsEntryAdapter extends RecyclerView.Adapter<DraftsEntryAdapter.
     public void onBindViewHolder(DraftsViewHolder holder, int position) {
         final DraftsEntry draft = posts.get(position);
         holder.imageView.setImageBitmap(draft.post.image_bitmap);
+//        holder.imageView.setImageBitmap(((BitmapDrawable) PostFragment.iw.getDrawable()).getBitmap());
         holder.postView.setText(draft.post.post_text);
     }
 
