@@ -42,6 +42,12 @@
                 android:layout_height="50dp"
                 android:layout_gravity="right"
                 android:background="?android:attr/selectableItemBackground" />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_clear"
+                android:tint="#d3d3d3"/>
         </FrameLayout>
     </LinearLayout>
 

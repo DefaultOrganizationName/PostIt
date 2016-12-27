@@ -33,7 +33,6 @@ import java.io.IOException;
 
 import post.it.project.database.DraftDatabase;
 import post.it.project.exceptions.PostItDatabaseException;
-import post.it.project.postit.Draft;
 import post.it.project.postit.DraftsEntry;
 import post.it.project.postit.ParcelablePost;
 import post.it.project.postit.Post;
@@ -66,7 +65,7 @@ public class PostFragment extends Fragment {
     public static Bitmap temp;
     protected Post postForNetwork;
     private static final int PERMISSION_REQUEST = 1;
-
+    File f;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,7 +79,7 @@ public class PostFragment extends Fragment {
         iw = (ImageView) rootView.findViewById(R.id.imageView);
         temp = ((BitmapDrawable) iw.getDrawable()).getBitmap();
         standart = temp;
-        File f = new File(getContext().getCacheDir(), "icon");
+        f = new File(getContext().getCacheDir(), "icon");
         try {
             f.createNewFile();
 
@@ -99,7 +98,7 @@ public class PostFragment extends Fragment {
             e.printStackTrace();
         }
 
-        image_path = f.getPath();
+        image_path = null;
 //        temp = Bitmap.createBitmap(iw.getDrawingCache());
 
         camera.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +155,7 @@ public class PostFragment extends Fragment {
                         return true;
                     } else {
                         addProperty("update", true);
-                        addToDrafts(new Post(getNetworks(), editTx.getText().toString(), new String(image_path)));
+                        addToDrafts(new Post(getNetworks(), editTx.getText().toString(), new String(f.getPath())));
                         clear();
                     }
                 }
@@ -173,6 +172,7 @@ public class PostFragment extends Fragment {
     private void clear() {
         editTx.getText().clear();
         iw.setImageBitmap(standart);
+        image_path = null;
         Utils.hidePhoneKeyboard(getActivity());
     }
 
