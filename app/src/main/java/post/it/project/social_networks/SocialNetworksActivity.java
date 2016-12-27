@@ -56,6 +56,8 @@ public class SocialNetworksActivity extends AbstractSocialNetworks {
                 stateText.setVisibility(View.INVISIBLE);
                 Response answer = intent.getParcelableExtra(Constants.ANSWER_OF_POST_SERVICE);
                 TextView tv = makeTextView(answer.nameOfNetwork);
+                tv.append(" ");
+                tv.append(answer.message);
                 textContainer.addView(tv);
             }
         };
