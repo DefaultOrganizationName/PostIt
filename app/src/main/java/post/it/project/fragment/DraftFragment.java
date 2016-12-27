@@ -65,8 +65,7 @@ public class DraftFragment extends Fragment {
             public void run() {
                 adapter.setPost(new DraftDatabase(context).getAll());
             }
-        });
-
+        }).start();
 
         if (getDraftText("draft_text") != null) {
             textView.setText(getDraftText("draft_text"));

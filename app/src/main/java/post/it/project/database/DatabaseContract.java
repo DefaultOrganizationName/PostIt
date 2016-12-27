@@ -23,13 +23,13 @@ public class DatabaseContract {
         static final String TABLE = "drafts";
 
 
-        static final String CREATE_TABLE = "CREATE TABLE" + TABLE
+        static final String CREATE_TABLE = "CREATE TABLE " + TABLE
                 + " ("
                 + _ID + " INTEGER PRIMARY KEY, "
                 + POST_TEXT + " TEXT, "
                 + POST_IMAGE + " BLOB, "
                 + VK_STATE + " INTEGER, "
-                + OK_STATE + " INTEGER, ";
+                + OK_STATE + " INTEGER)";
 //                + "fb_status INTEGER, "
 //                + "insta_status INTEGER";
     }

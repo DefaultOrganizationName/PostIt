@@ -15,7 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import post.it.project.social_networks.SocialNetworksActivity;
+import post.it.project.VK.Constants;
+import post.it.project.VK.VkActivity;
 import post.it.project.postit.Post;
 import post.it.project.postit.R;
 
@@ -60,7 +61,7 @@ public class PostFragment extends Fragment {
                 imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                 editTx.getText().clear();
 
-                Intent i = new Intent(getActivity(), SocialNetworksActivity.class);
+                Intent i = new Intent(getActivity(), VkActivity.class);
                 startActivity(i);
             }
         });
