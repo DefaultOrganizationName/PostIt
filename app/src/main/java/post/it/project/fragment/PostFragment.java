@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,7 +49,7 @@ public class PostFragment extends Fragment {
     ImageView iw;
     EditText editTx;
     TextView text;
-    Bitmap temp;
+    public static Bitmap temp;
     Post postForNetwork;
     private FragmentTransaction fTrans;
 
@@ -57,21 +58,14 @@ public class PostFragment extends Fragment {
                              Bundle savedInstanceState) {
 //        SQLiteDatabase db = MainActivity.dbHelper.getReadableDatabase();
         final View rootView = inflater.inflate(R.layout.post_fragment, container, false);
-        text = (TextView) rootView.findViewById(R.id.textInPost);
         Button camera = (Button) rootView.findViewById(R.id.new_post_camera_button);
         Button gallery = (Button) rootView.findViewById(R.id.new_post_gallery_button);
         Button post = (Button) rootView.findViewById(R.id.button);
         editTx = (EditText) rootView.findViewById(R.id.eText);
 
         iw = (ImageView) rootView.findViewById(R.id.imageView);
-        iw.buildDrawingCache();
-
-
-        if (!getProperty("vk")) {
-            text.setText("VK OFF");
-        } else if (getProperty("vk")) {
-            text.setText("VK ON");
-        }
+        temp = ((BitmapDrawable) iw.getDrawable()).getBitmap();
+//        temp = Bitmap.createBitmap(iw.getDrawingCache());
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +108,7 @@ public class PostFragment extends Fragment {
                 if (!isEmpty(editTx)) {
                     int[] nw = getNetworks();
                     if (nw[0] == 0 && nw[1] == 0) {
-                        text.setText("CHOOSE NETWORKS");
+                        return true;
                     } else {
 
                         addToDrafts(new Post(getNetworks(), editTx.getText().toString(), temp));
@@ -202,7 +196,7 @@ public class PostFragment extends Fragment {
                     loadedBitmap = rotateBitmap(loadedBitmap, 270);
                     break;
             }
-            temp = loadedBitmap;
+            temp = Bitmap.createBitmap(loadedBitmap);
             iw.setImageBitmap(loadedBitmap);
         }
 

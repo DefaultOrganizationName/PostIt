@@ -11,10 +11,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
 import post.it.project.exceptions.PostItDatabaseException;
+import post.it.project.fragment.PostFragment;
 import post.it.project.postit.DraftsEntry;
 import post.it.project.postit.Post;
 
@@ -40,10 +42,15 @@ public class DraftDatabase {
         cv.put(DatabaseContract.Drafts.POST_TEXT, entry.post.post_text);
 
         //get image as byte array to put in SQL table (BLOB)
-        Bitmap bmp = entry.post.image_bitmap;
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 0, stream);
-        byte[] byteArray = stream.toByteArray();
+        Bitmap bmp = Bitmap.createBitmap(entry.post.image_bitmap);
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        bmp.compress(Bitmap.CompressFormat.PNG, 0, stream);
+//        byte[] byteArray = stream.toByteArray();
+        final int lenght = bmp.getByteCount();
+        ByteBuffer dst = ByteBuffer.allocate(lenght);
+        bmp.copyPixelsToBuffer(dst);
+        byte[] byteArray = dst.array();
+
         cv.put(DatabaseContract.Drafts.POST_IMAGE, byteArray);
 
         cv.put(DatabaseContract.Drafts.VK_STATE, entry.post.networks[0]);

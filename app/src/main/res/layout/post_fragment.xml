@@ -21,6 +21,7 @@
             android:fontFamily="sans-serif"
             android:layout_gravity="center"
             android:textSize="24sp"/>
+
         <EditText
             android:layout_width="351dp"
             android:layout_height="214dp"
@@ -28,7 +29,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="182dp"
-
+            app:srcCompat="@mipmap/ic_launcher"
             android:id="@+id/imageView" />
     </LinearLayout>
 
@@ -53,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:src="@drawable/ic_camera"
                 android:tint="#d3d3d3" />
         </FrameLayout>
         <FrameLayout
@@ -80,6 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:src="@drawable/ic_collections"
                 android:tint="#d3d3d3"/>
         </FrameLayout>
 
