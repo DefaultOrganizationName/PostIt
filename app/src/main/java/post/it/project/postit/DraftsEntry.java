@@ -12,9 +12,9 @@ public class DraftsEntry {
     public final int id;
 
     @NonNull
-    public final Post post;
+    public final Draft post;
 
-    public DraftsEntry(int id, @NonNull Post post) {
+    public DraftsEntry(int id, @NonNull Draft post) {
         this.id = id;
         this.post = post;
     }

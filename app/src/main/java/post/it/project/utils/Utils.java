@@ -3,10 +3,17 @@ package post.it.project.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Михаил on 25.12.2016.
@@ -22,31 +29,39 @@ public class Utils {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static void checkForPermissions(Activity activity) {
-        if (ContextCompat.checkSelfPermission(activity,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+    public static Bitmap rotatePic(String picturePath) {
+        Bitmap loadedBitmap = BitmapFactory.decodeFile(picturePath);
 
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-            } else {
-
-                // No explanation needed, we can request the permission.
-
-                ActivityCompat.requestPermissions(activity,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
-                        1337);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
+        ExifInterface exif = null;
+        try {
+            File pictureFile = new File(picturePath);
+            exif = new ExifInterface(pictureFile.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        int orientation = ExifInterface.ORIENTATION_NORMAL;
+
+        if (exif != null)
+            orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                loadedBitmap = rotateBitmap(loadedBitmap, 90);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                loadedBitmap = rotateBitmap(loadedBitmap, 180);
+                break;
+
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                loadedBitmap = rotateBitmap(loadedBitmap, 270);
+                break;
+        }
+        return loadedBitmap;
+    }
+    public static Bitmap rotateBitmap(Bitmap bitmap, int degrees) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degrees);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 }

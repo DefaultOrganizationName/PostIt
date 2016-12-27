@@ -26,11 +26,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import post.it.project.database.DraftDatabase;
 import post.it.project.exceptions.PostItDatabaseException;
+import post.it.project.postit.Draft;
 import post.it.project.postit.DraftsEntry;
 import post.it.project.postit.ParcelablePost;
 import post.it.project.postit.Post;
@@ -56,11 +59,12 @@ public class PostFragment extends Fragment {
     private final static int PICK_PHOTO_FROM_GALLERY = 123;
     private final static int REQUEST_PHOTO_FROM_CAMERA = 456;
     public static ImageView iw;
+    String image_path;
     EditText editTx;
     TextView text;
+    Bitmap standart;
     public static Bitmap temp;
     protected Post postForNetwork;
-    private FragmentTransaction fTrans;
     private static final int PERMISSION_REQUEST = 1;
 
     @Override
@@ -75,6 +79,27 @@ public class PostFragment extends Fragment {
 
         iw = (ImageView) rootView.findViewById(R.id.imageView);
         temp = ((BitmapDrawable) iw.getDrawable()).getBitmap();
+        standart = temp;
+        File f = new File(getContext().getCacheDir(), "icon");
+        try {
+            f.createNewFile();
+
+//Convert bitmap to byte array
+            Bitmap bitmap = temp;
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        image_path = f.getPath();
 //        temp = Bitmap.createBitmap(iw.getDrawingCache());
 
         camera.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +156,7 @@ public class PostFragment extends Fragment {
                         return true;
                     } else {
                         addProperty("update", true);
-                        addToDrafts(new Post(getNetworks(), editTx.getText().toString(), temp));
+                        addToDrafts(new Draft(getNetworks(), editTx.getText().toString(), new String(image_path)));
                         clear();
                     }
                 }
@@ -147,11 +172,11 @@ public class PostFragment extends Fragment {
 
     private void clear() {
         editTx.getText().clear();
-        iw.setImageBitmap(null);
+        iw.setImageBitmap(standart);
         Utils.hidePhoneKeyboard(getActivity());
     }
 
-    public void addToDrafts(Post post) {
+    public void addToDrafts(Draft post) {
         try {
             int id = getID("ID");
             setID("ID", id + 1);
@@ -202,44 +227,46 @@ public class PostFragment extends Fragment {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            Bitmap loadedBitmap = BitmapFactory.decodeFile(picturePath);
-
-            ExifInterface exif = null;
-            try {
-                File pictureFile = new File(picturePath);
-                exif = new ExifInterface(pictureFile.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            int orientation = ExifInterface.ORIENTATION_NORMAL;
-
-            if (exif != null)
-                orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    loadedBitmap = rotateBitmap(loadedBitmap, 90);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    loadedBitmap = rotateBitmap(loadedBitmap, 180);
-                    break;
-
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    loadedBitmap = rotateBitmap(loadedBitmap, 270);
-                    break;
-            }
+            Bitmap loadedBitmap = Utils.rotatePic(picturePath);
+//            Bitmap loadedBitmap = BitmapFactory.decodeFile(picturePath);
+//
+//            ExifInterface exif = null;
+//            try {
+//                File pictureFile = new File(picturePath);
+//                exif = new ExifInterface(pictureFile.getAbsolutePath());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            int orientation = ExifInterface.ORIENTATION_NORMAL;
+//
+//            if (exif != null)
+//                orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//
+//            switch (orientation) {
+//                case ExifInterface.ORIENTATION_ROTATE_90:
+//                    loadedBitmap = rotateBitmap(loadedBitmap, 90);
+//                    break;
+//                case ExifInterface.ORIENTATION_ROTATE_180:
+//                    loadedBitmap = rotateBitmap(loadedBitmap, 180);
+//                    break;
+//
+//                case ExifInterface.ORIENTATION_ROTATE_270:
+//                    loadedBitmap = rotateBitmap(loadedBitmap, 270);
+//                    break;
+//            }
+            image_path = picturePath;
             temp = loadedBitmap;
             iw.setImageBitmap(loadedBitmap);
         }
 
     }
 
-    public static Bitmap rotateBitmap(Bitmap bitmap, int degrees) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degrees);
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-    }
+//    public static Bitmap rotateBitmap(Bitmap bitmap, int degrees) {
+//        Matrix matrix = new Matrix();
+//        matrix.postRotate(degrees);
+//        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+//    }
 
     String LOG_TAG = "PostFragment";
 }

@@ -27,7 +27,7 @@ public class DatabaseContract {
                 + " ("
                 + _ID + " INTEGER PRIMARY KEY, "
                 + POST_TEXT + " TEXT, "
-                + POST_IMAGE + " BLOB, "
+                + POST_IMAGE + " TEXT, "
                 + VK_STATE + " INTEGER, "
                 + OK_STATE + " INTEGER)";
 //                + "fb_status INTEGER, "

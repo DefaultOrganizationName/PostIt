@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import post.it.project.fragment.PostFragment;
 import post.it.project.postit.DraftsEntry;
 import post.it.project.postit.MainActivity;
 import post.it.project.postit.R;
+import post.it.project.utils.Utils;
 
 /**
  * Created by Михаил on 16.12.2016.
@@ -46,7 +48,8 @@ public class DraftsEntryAdapter extends RecyclerView.Adapter<DraftsEntryAdapter.
     @Override
     public void onBindViewHolder(DraftsViewHolder holder, int position) {
         final DraftsEntry draft = posts.get(position);
-        holder.imageView.setImageBitmap(draft.post.image_bitmap);
+        Log.d("adapter", draft.post.image_path);
+        holder.imageView.setImageBitmap(Utils.rotatePic(draft.post.image_path));
 //        holder.imageView.setImageBitmap(((BitmapDrawable) PostFragment.iw.getDrawable()).getBitmap());
         holder.postView.setText(draft.post.post_text);
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {

@@ -21,6 +21,7 @@ import java.util.List;
 
 import post.it.project.exceptions.PostItDatabaseException;
 import post.it.project.fragment.PostFragment;
+import post.it.project.postit.Draft;
 import post.it.project.postit.DraftsEntry;
 import post.it.project.postit.Post;
 
@@ -46,15 +47,18 @@ public class DraftDatabase {
         cv.put(DatabaseContract.Drafts.POST_TEXT, entry.post.post_text);
 
         //get image as byte array to put in SQL table (BLOB)
-        Bitmap bmp = Bitmap.createBitmap(entry.post.image_bitmap);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 0, stream);
-        byte[] byteArray = stream.toByteArray();
+//        Bitmap bmp = Bitmap.createBitmap(entry.post.image_bitmap);
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        bmp.compress(Bitmap.CompressFormat.PNG, 0, stream);
+//        byte[] byteArray = stream.toByteArray();
 //        final int lenght = bmp.getByteCount();
 //        ByteBuffer dst = ByteBuffer.allocate(lenght);
 //        bmp.copyPixelsToBuffer(dst);
 //        byte[] byteArray = dst.array();
-        cv.put(DatabaseContract.Drafts.POST_IMAGE, byteArray);
+
+        //put image path
+
+        cv.put(DatabaseContract.Drafts.POST_IMAGE, entry.post.image_path);
 
         cv.put(DatabaseContract.Drafts.VK_STATE, entry.post.networks[0]);
         cv.put(DatabaseContract.Drafts.OK_STATE, entry.post.networks[1]);
@@ -85,14 +89,14 @@ public class DraftDatabase {
                     int i = 0;
                     int id = cursor.getInt(i++);
                     String text = cursor.getString(i++);
-                    byte[] image = cursor.getBlob(i++);
+                    String image = cursor.getString(i++);
                     int vk_state = cursor.getInt(i++);
                     int ok_state = cursor.getInt(i);
 //                    int fb_state = cursor.getInt(i++);
 //                    int insta_state = cursor.getInt(i++);
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+//                    Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
                     int[] networks = {vk_state, ok_state};
-                    DraftsEntry entry = new DraftsEntry(id, new Post(networks, text, bitmap));
+                    DraftsEntry entry = new DraftsEntry(id, new Draft(networks, text, image));
                     draftsEntries.add(entry);
                 }
             }
