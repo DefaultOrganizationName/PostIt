@@ -4,24 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.AnyThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
-import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Array;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import post.it.project.exceptions.PostItDatabaseException;
-import post.it.project.fragment.PostFragment;
-import post.it.project.postit.Draft;
 import post.it.project.postit.DraftsEntry;
 import post.it.project.postit.Post;
 
@@ -96,7 +86,7 @@ public class DraftDatabase {
 //                    int insta_state = cursor.getInt(i++);
 //                    Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
                     int[] networks = {vk_state, ok_state};
-                    DraftsEntry entry = new DraftsEntry(id, new Draft(networks, text, image));
+                    DraftsEntry entry = new DraftsEntry(id, new Post(networks, text, image));
                     draftsEntries.add(entry);
                 }
             }

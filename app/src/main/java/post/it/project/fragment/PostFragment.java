@@ -133,7 +133,7 @@ public class PostFragment extends Fragment {
                     addDraftText("draft_text", editTx.getText().toString());
 //                    ppost = new Post(new int[]{0, 0, 0, 0}, editTx.getText().toString(), bm);
 
-                    postForNetwork = new Post(getNetworks(), editTx.getText().toString(), Bitmap.createBitmap(((BitmapDrawable) iw.getDrawable()).getBitmap()));
+                    postForNetwork = new Post(getNetworks(), editTx.getText().toString(), image_path);
 
                     editTx.clearFocus();
                     Utils.hidePhoneKeyboard(getActivity());
@@ -156,7 +156,7 @@ public class PostFragment extends Fragment {
                         return true;
                     } else {
                         addProperty("update", true);
-                        addToDrafts(new Draft(getNetworks(), editTx.getText().toString(), new String(image_path)));
+                        addToDrafts(new Post(getNetworks(), editTx.getText().toString(), new String(image_path)));
                         clear();
                     }
                 }
@@ -176,7 +176,7 @@ public class PostFragment extends Fragment {
         Utils.hidePhoneKeyboard(getActivity());
     }
 
-    public void addToDrafts(Draft post) {
+    public void addToDrafts(Post post) {
         try {
             int id = getID("ID");
             setID("ID", id + 1);

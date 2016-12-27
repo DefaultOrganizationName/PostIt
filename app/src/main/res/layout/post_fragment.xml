@@ -7,48 +7,61 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textInPost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textInPost"
-            android:text="@string/post_string"
-            android:textStyle="bold|italic"
-            android:fontFamily="sans-serif"
             android:layout_gravity="center"
-            android:textSize="24sp"/>
+            android:fontFamily="sans-serif"
+            android:text="@string/post_string"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
 
         <EditText
+            android:id="@+id/eText"
             android:layout_width="351dp"
-            android:layout_height="214dp"
-            android:id="@+id/eText" />
-        <ImageView
+            android:layout_height="214dp" />
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="182dp"
-            app:srcCompat="@mipmap/ic_launcher"
-            android:id="@+id/imageView" />
+            android:layout_height="182dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="182dp"
+                app:srcCompat="@mipmap/ic_launcher" />
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:background="?android:attr/selectableItemBackground" />
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="bottom"
         android:orientation="horizontal"
-        android:weightSum="4"
-        android:gravity="bottom">
+        android:weightSum="4">
+
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/new_post_camera_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/new_post_camera_button"
-                android:background="?android:attr/selectableItemBackground"/>
+                android:background="?android:attr/selectableItemBackground" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -57,38 +70,42 @@
                 android:src="@drawable/ic_camera"
                 android:tint="#d3d3d3" />
         </FrameLayout>
+
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2">
+
             <Button
+                android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/button"
-                android:background="?android:attr/selectableItemBackground"/>
+                android:background="?android:attr/selectableItemBackground" />
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_post"/>
+                android:src="@drawable/ic_post" />
         </FrameLayout>
+
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/new_post_gallery_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/new_post_gallery_button"
-                android:background="?android:attr/selectableItemBackground"/>
+                android:background="?android:attr/selectableItemBackground" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_collections"
-                android:tint="#d3d3d3"/>
+                android:tint="#d3d3d3" />
         </FrameLayout>
 
     </LinearLayout>
@@ -97,6 +114,7 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
     </FrameLayout>
 
 
