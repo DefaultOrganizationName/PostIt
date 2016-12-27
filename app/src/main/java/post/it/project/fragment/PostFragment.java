@@ -32,8 +32,10 @@ import java.io.IOException;
 import post.it.project.database.DraftDatabase;
 import post.it.project.exceptions.PostItDatabaseException;
 import post.it.project.postit.DraftsEntry;
+import post.it.project.postit.ParcelablePost;
 import post.it.project.postit.Post;
 import post.it.project.postit.R;
+import post.it.project.social_networks.Constants;
 import post.it.project.social_networks.SocialNetworksActivity;
 import post.it.project.utils.Utils;
 
@@ -57,7 +59,7 @@ public class PostFragment extends Fragment {
     EditText editTx;
     TextView text;
     public static Bitmap temp;
-    Post postForNetwork;
+    protected Post postForNetwork;
     private FragmentTransaction fTrans;
     private static final int PERMISSION_REQUEST = 1;
 
@@ -68,7 +70,7 @@ public class PostFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.post_fragment, container, false);
         Button camera = (Button) rootView.findViewById(R.id.new_post_camera_button);
         Button gallery = (Button) rootView.findViewById(R.id.new_post_gallery_button);
-        Button post = (Button) rootView.findViewById(R.id.button);
+        final Button post = (Button) rootView.findViewById(R.id.button);
         editTx = (EditText) rootView.findViewById(R.id.eText);
 
         iw = (ImageView) rootView.findViewById(R.id.imageView);
@@ -113,6 +115,8 @@ public class PostFragment extends Fragment {
                     editTx.getText().clear();
                     addProperty("update", true);
                     Intent i = new Intent(getActivity(), SocialNetworksActivity.class);
+                    ParcelablePost parcelablePostForNetworks = new ParcelablePost(postForNetwork);
+                    i.putExtra(Constants.CURRENT_POST_KEY, parcelablePostForNetworks);
                     startActivity(i);
                 }
             }

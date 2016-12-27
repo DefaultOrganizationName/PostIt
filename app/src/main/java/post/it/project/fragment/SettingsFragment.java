@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
+import com.vk.sdk.VKSdk;
 
 import post.it.project.social_networks.VK.LogIn;
 import post.it.project.postit.R;
@@ -65,6 +68,16 @@ public class SettingsFragment extends Fragment {
                 login(b);
             }
         });
+
+        Button logout = (Button) rootView.findViewById(R.id.logOutBtn);
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VKSdk.logout();
+
+            }
+        };
+        logout.setOnClickListener(listener);
 
         return rootView;
     }
