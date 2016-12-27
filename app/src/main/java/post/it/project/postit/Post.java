@@ -1,9 +1,8 @@
 package post.it.project.postit;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 
-import post.it.project.VK.Constants;
+import post.it.project.social_networks.Constants;
 
 /**
  * Created by Михаил on 09.12.2016.

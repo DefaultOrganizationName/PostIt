@@ -12,5 +12,13 @@
 
     <string name="during_post">Posting is performing</string>
 
+    <string name="status_logged_in">You are logged in</string>
+    <string name="status_not_logged_in">You are not logged in. Go to settings</string>
+    <string name="status_wrong">Sorry, but something went wrong</string>
+    <string name="status_no_internet">Check your internet access</string>
+    <string name="status_posted">Posted!</string>
+    <string name="status_performing">Performing..</string>
+
+
     <string name="draft_string">DRAFT</string>
 </resources>

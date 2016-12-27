@@ -9,7 +9,6 @@
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../../AppData/Local/Android/sdk1/extras/android/m2repository/com/android/support/design/25.0.1/design-25.0.1-sources.jar!/" />
       <root url="jar://E:/Android/sdk/extras/android/m2repository/com/android/support/design/25.0.1/design-25.0.1-sources.jar!/" />
     </SOURCES>
   </library>

@@ -1,31 +1,17 @@
 package post.it.project.fragment;
 
-import android.app.Activity;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import com.vk.sdk.VKAccessToken;
-import com.vk.sdk.VKSdk;
-import com.vk.sdk.api.model.VKScopes;
-
-import post.it.project.VK.Constants;
-import post.it.project.VK.LogIn;
-import post.it.project.postit.MainActivity;
+import post.it.project.social_networks.VK.LogIn;
 import post.it.project.postit.R;
-import post.it.project.storage.PersistantStorage;
 
 import static post.it.project.storage.PersistantStorage.addProperty;
 import static post.it.project.storage.PersistantStorage.getProperty;
