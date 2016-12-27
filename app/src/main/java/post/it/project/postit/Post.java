@@ -12,12 +12,12 @@ public class Post {
     public final int[] networks;
 
     public final String post_text;
-    public final Bitmap image_bitmap;
+    public final String image_path;
 
     // post_text or image_bitmap can be null
-    public Post(int[] networks, String post_text, Bitmap image_bitmap) {
+    public Post(int[] networks, String post_text, String image_path) {
         this.networks = networks;
         this.post_text = post_text;
-        this.image_bitmap = image_bitmap;
+        this.image_path = image_path;
     }
 }
