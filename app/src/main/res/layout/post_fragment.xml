@@ -13,16 +13,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/section_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/post_string"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textInPost"
-            android:text="MDAMDE"/>
+            android:text="@string/post_string"
+            android:textStyle="bold|italic"
+            android:fontFamily="sans-serif"
+            android:layout_gravity="center"
+            android:textSize="24sp"/>
         <EditText
             android:layout_width="351dp"
             android:layout_height="214dp"
