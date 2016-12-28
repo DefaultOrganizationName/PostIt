@@ -16,11 +16,31 @@
         android:name="post.it.project.social_networks.VK.VkApplication"
         android:largeHeap="true"
         >
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
-        <service android:name="post.it.project.social_networks.PostToNetworksService"/>
+        <service android:name="post.it.project.social_networks.VK.PostToVkService"/>
 
         <activity android:name="post.it.project.social_networks.VK.LogIn"/>
+        <activity android:name="post.it.project.social_networks.Odnoklassniki.OkLogIn"/>
         <activity android:name="post.it.project.social_networks.SocialNetworksActivity"/>
+        <activity android:name="ru.ok.android.sdk.OkPostingActivity"/>
+        <activity android:name="ru.ok.android.sdk.OkAppInviteActivity"/>
+        <activity android:name="ru.ok.android.sdk.OkAppSuggestActivity"/>
+
+
+        <activity
+            android:name="ru.ok.android.sdk.OkAuthActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="ok1249314816"
+                    android:scheme="okauth"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".MainActivity"

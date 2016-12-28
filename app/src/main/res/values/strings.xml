@@ -19,6 +19,7 @@
     <string name="status_posted">Posted!</string>
     <string name="status_performing">Performing..</string>
 
+    <string name="facebook_app_id">388614831486686</string>
 
     <string name="draft_string">DRAFT</string>
 </resources>

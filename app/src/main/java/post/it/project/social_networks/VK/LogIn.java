@@ -37,11 +37,4 @@ public class LogIn extends AbstractSocialNetworks {
             super.setText(R.string.status_logged_in);
         }
     }
-
-    @Override
-    public void onClick(View v) {
-        finish();
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-    }
 }
