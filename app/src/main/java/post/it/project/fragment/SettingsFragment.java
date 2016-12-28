@@ -13,11 +13,15 @@ import android.widget.Switch;
 
 import com.vk.sdk.VKSdk;
 
+import post.it.project.social_networks.Odnoklassniki.OkConstants;
 import post.it.project.social_networks.VK.LogIn;
 import post.it.project.postit.R;
 
 import static post.it.project.storage.PersistantStorage.addProperty;
 import static post.it.project.storage.PersistantStorage.getProperty;
+
+import post.it.project.social_networks.Odnoklassniki.OkLogIn;
+import ru.ok.android.sdk.Odnoklassniki;
 
 
 /**
@@ -34,7 +38,7 @@ public class SettingsFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.settings_fragment, container, false);
         final Switch VK = (Switch) rootView.findViewById(R.id.vk);
         Switch FB = (Switch) rootView.findViewById(R.id.fb);
-        Switch OK = (Switch) rootView.findViewById(R.id.ok);
+        final Switch OK = (Switch) rootView.findViewById(R.id.ok);
         Switch IG = (Switch) rootView.findViewById(R.id.insta);
         VK.setChecked(getProperty("vk"));
         FB.setChecked(getProperty("fb"));
@@ -44,28 +48,28 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 addProperty("vk", b);
-                login(b);
+                login("vk", b);
             }
         });
         FB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 addProperty("fb", b);
-                login(b);
+                login("fb", b);
             }
         });
         OK.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 addProperty("ok", b);
-                login(b);
+                login("ok", b);
             }
         });
         IG.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 addProperty("insta", b);
-                login(b);
+                login("insta", b);
             }
         });
 
@@ -75,7 +79,8 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 VKSdk.logout();
                 VK.setChecked(false);
-                //TODO another networks
+                Odnoklassniki.createInstance(getActivity(), OkConstants.APP_ID, OkConstants.APP_KEY).clearTokens();
+                OK.setChecked(false);
             }
         };
         logout.setOnClickListener(listener);
@@ -83,11 +88,22 @@ public class SettingsFragment extends Fragment {
         return rootView;
     }
 
-    private void login(boolean b) {
+    private void login(String property, boolean b) {
         if (b) {
-            Intent i = new Intent(getActivity(), LogIn.class);
-            startActivity(i);
-            //TODO another networks
+            Intent i = null;
+            switch (property) {
+                case "vk":
+                    i = new Intent(getActivity(), LogIn.class);
+                    break;
+                case "ok":
+                    i = new Intent(getActivity(), OkLogIn.class);
+                    break;
+                default:
+                    i = new Intent(getActivity(), LogIn.class);
+                    break;
+            }
+            //Intent i = new Intent(getActivity(), LogIn.class);
+            if (i != null) startActivity(i);
         }
     }
 }

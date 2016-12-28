@@ -4,7 +4,6 @@ package post.it.project.social_networks.VK;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.nfc.Tag;
 import android.util.Log;
 
 import com.vk.sdk.VKAccessToken;
@@ -22,11 +21,10 @@ import com.vk.sdk.api.photo.VKImageParameters;
 import com.vk.sdk.api.photo.VKUploadImage;
 
 import post.it.project.postit.R;
-import post.it.project.social_networks.PostToNetworksService;
 import post.it.project.social_networks.ResultType;
 import post.it.project.utils.Utils;
 
-public class VkPost extends PostToNetworksService implements Runnable {
+public class VkPost extends PostToVkService implements Runnable {
 
     private Bitmap photo = null;
     private String message = null;

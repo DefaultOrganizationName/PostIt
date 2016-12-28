@@ -5,7 +5,7 @@ package post.it.project.social_networks;
  */
 
 public class Constants {
-    public static String ANSWER_OF_POST_SERVICE =  "NETWORK";
-    public static String CURRENT_POST_KEY = "MESSAGE_AND_PHOTO_KEY";
+    public static final String ANSWER_OF_POST_SERVICE =  "NETWORK";
+    public static final String CURRENT_POST_KEY = "MESSAGE_AND_PHOTO_KEY";
 
 }

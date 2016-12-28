@@ -4,33 +4,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.vk.sdk.VKAccessToken;
-import com.vk.sdk.VKSdk;
-import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKApiConst;
-import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
-import com.vk.sdk.api.VKRequest;
-import com.vk.sdk.api.VKResponse;
-import com.vk.sdk.api.model.VKApiPhoto;
-import com.vk.sdk.api.model.VKAttachments;
-import com.vk.sdk.api.model.VKPhotoArray;
-import com.vk.sdk.api.model.VKWallPostResult;
-import com.vk.sdk.api.photo.VKImageParameters;
-import com.vk.sdk.api.photo.VKUploadImage;
-
 import post.it.project.postit.ParcelablePost;
-import post.it.project.postit.Post;
 import post.it.project.postit.R;
-import post.it.project.social_networks.VK.VkPost;
+import post.it.project.social_networks.Odnoklassniki.PostToOkService;
+import post.it.project.social_networks.VK.PostToVkService;
 
 /**
  * Created by Kirill Antonov on 18.12.2016.
@@ -51,6 +35,8 @@ public class SocialNetworksActivity extends AbstractSocialNetworks {
         Intent aboveIntent = getIntent();
         final ParcelablePost post = aboveIntent.getParcelableExtra(Constants.CURRENT_POST_KEY);
 
+
+
         //making broadcast
         answerCatcher = new BroadcastReceiver() {
             @Override
@@ -59,6 +45,11 @@ public class SocialNetworksActivity extends AbstractSocialNetworks {
                 Response answer = intent.getParcelableExtra(Constants.ANSWER_OF_POST_SERVICE);
                 TextView tv = makeTextView(answer.nameOfNetwork);
                 tv.append(" ");
+                if (answer.resultType == ResultType.OK) {
+                    tv.setTextColor(Color.MAGENTA);
+                } else {
+                    tv.setTextColor(Color.RED);
+                }
                 tv.append(answer.message);
                 textContainer.addView(tv);
             }
@@ -67,11 +58,17 @@ public class SocialNetworksActivity extends AbstractSocialNetworks {
         registerReceiver(answerCatcher, intentFilter);
 
         //starting service
-        Intent intent = new Intent(this, PostToNetworksService.class);
-        if (post == null) Log.d(TAG, "post is null");
-        intent.putExtra(Constants.CURRENT_POST_KEY, post);
-        Log.d(TAG, post.post_text);
-        startService(intent);
+        if (post.networks[0] == 1) {
+            Intent intent = new Intent(this, PostToVkService.class);
+            intent.putExtra(Constants.CURRENT_POST_KEY, post);
+            startService(intent);
+        }
+        if (post.networks[1] == 1) {
+            Intent intent  = new Intent(this, PostToOkService.class);
+            intent.putExtra(Constants.CURRENT_POST_KEY, post);
+            startService(intent);
+        }
+
     }
 
     @Override
