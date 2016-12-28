@@ -13,9 +13,6 @@ import ru.ok.android.sdk.OkListener;
 import ru.ok.android.sdk.util.OkAuthType;
 import ru.ok.android.sdk.util.OkScope;
 
-/**
- * Created by Kirill Antonov on 28.12.2016.
- */
 
 public class OkLogIn extends AbstractSocialNetworks {
     @Override
@@ -38,7 +35,7 @@ public class OkLogIn extends AbstractSocialNetworks {
             }
             @Override
             public void onError(String error) {
-                setText(R.string.status_not_logged_in);
+                setText(R.string.status_wrong);
             }
         });
         ok.requestAuthorization(this, OkConstants.REDIRECT_URI, OkAuthType.ANY, OkScope.VALUABLE_ACCESS);

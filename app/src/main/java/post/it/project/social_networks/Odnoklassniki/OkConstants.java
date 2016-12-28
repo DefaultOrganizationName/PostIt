@@ -1,9 +1,5 @@
 package post.it.project.social_networks.Odnoklassniki;
 
-/**
- * Created by Kirill Antonov on 28.12.2016.
- */
-
 public class OkConstants {
     public static final String APP_ID = "1249314816";
     public static final String APP_KEY = "CBAJAIHLEBABABABA";

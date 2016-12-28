@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-/**
- * Created by Kirill Antonov on 28.12.2016.
- */
+import ru.ok.android.sdk.Odnoklassniki;
+
+
 
 public class PostToOkService extends Service {
     @Nullable
@@ -18,6 +18,7 @@ public class PostToOkService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         return super.onStartCommand(intent, flags, startId);
     }
 }

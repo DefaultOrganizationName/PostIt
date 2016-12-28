@@ -1,6 +1,8 @@
 package post.it.project.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +20,10 @@ import post.it.project.database.DraftDatabase;
 import post.it.project.fragment.PostFragment;
 import post.it.project.postit.DraftsEntry;
 import post.it.project.postit.MainActivity;
+import post.it.project.postit.ParcelablePost;
 import post.it.project.postit.R;
+import post.it.project.social_networks.Constants;
+import post.it.project.social_networks.SocialNetworksActivity;
 import post.it.project.utils.Utils;
 
 /**
