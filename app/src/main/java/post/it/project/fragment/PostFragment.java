@@ -67,6 +67,8 @@ public class PostFragment extends Fragment {
     private static final int PERMISSION_REQUEST = 1;
     File f;
     Button clear;
+    ImageView clearImage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class PostFragment extends Fragment {
         Button camera = (Button) rootView.findViewById(R.id.new_post_camera_button);
         Button gallery = (Button) rootView.findViewById(R.id.new_post_gallery_button);
         clear = (Button) rootView.findViewById(R.id.clear);
+        clearImage = (ImageView) rootView.findViewById(R.id.clearImage);
         final Button post = (Button) rootView.findViewById(R.id.button);
         editTx = (EditText) rootView.findViewById(R.id.eText);
 
@@ -171,6 +174,16 @@ public class PostFragment extends Fragment {
                 return true;
             }
         });
+        if (savedInstanceState != null) {
+            editTx.setText(savedInstanceState.getString("POST_TEXT"));
+            image_path = savedInstanceState.getString("IMAGE_PATH");
+            if (image_path != null) {
+                Bitmap loadedBitmap = Utils.rotatePic(image_path);
+                iw.setImageBitmap(loadedBitmap);
+            }
+            clearImage.setVisibility((savedInstanceState.getInt("STATE") == View.VISIBLE ? View.VISIBLE : View.INVISIBLE));
+            clear.setVisibility((savedInstanceState.getInt("STATE") == View.VISIBLE ? View.VISIBLE : View.INVISIBLE));
+        }
         return rootView;
     }
 
@@ -215,9 +228,11 @@ public class PostFragment extends Fragment {
     public void setVisible(int flag) {
         switch (flag) {
             case 1:
+                clearImage.setVisibility(View.VISIBLE);
                 clear.setVisibility(View.VISIBLE);
                 break;
             case 0:
+                clearImage.setVisibility(View.INVISIBLE);
                 clear.setVisibility(View.INVISIBLE);
                 break;
         }
@@ -248,33 +263,6 @@ public class PostFragment extends Fragment {
             cursor.close();
 
             Bitmap loadedBitmap = Utils.rotatePic(picturePath);
-//            Bitmap loadedBitmap = BitmapFactory.decodeFile(picturePath);
-//
-//            ExifInterface exif = null;
-//            try {
-//                File pictureFile = new File(picturePath);
-//                exif = new ExifInterface(pictureFile.getAbsolutePath());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            int orientation = ExifInterface.ORIENTATION_NORMAL;
-//
-//            if (exif != null)
-//                orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//
-//            switch (orientation) {
-//                case ExifInterface.ORIENTATION_ROTATE_90:
-//                    loadedBitmap = rotateBitmap(loadedBitmap, 90);
-//                    break;
-//                case ExifInterface.ORIENTATION_ROTATE_180:
-//                    loadedBitmap = rotateBitmap(loadedBitmap, 180);
-//                    break;
-//
-//                case ExifInterface.ORIENTATION_ROTATE_270:
-//                    loadedBitmap = rotateBitmap(loadedBitmap, 270);
-//                    break;
-//            }
             image_path = picturePath;
             temp = loadedBitmap;
             iw.setImageBitmap(loadedBitmap);
@@ -283,11 +271,12 @@ public class PostFragment extends Fragment {
 
     }
 
-//    public static Bitmap rotateBitmap(Bitmap bitmap, int degrees) {
-//        Matrix matrix = new Matrix();
-//        matrix.postRotate(degrees);
-//        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-//    }
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("POST_TEXT", editTx.getText().toString());
+        outState.putString("IMAGE_PATH", image_path);
+        outState.putInt("STATE", clearImage.getVisibility());
+    }
 
     String LOG_TAG = "PostFragment";
 }

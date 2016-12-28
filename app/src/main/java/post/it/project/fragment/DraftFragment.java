@@ -15,6 +15,7 @@ import post.it.project.adapter.DraftsEntryAdapter;
 import post.it.project.database.DraftDatabase;
 import post.it.project.postit.Post;
 import post.it.project.postit.R;
+import post.it.project.postit.RecyclerDividersDecorator;
 
 import static post.it.project.storage.PersistantStorage.getDraftText;
 
@@ -49,7 +50,6 @@ public class DraftFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.draft_fragment, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_draft);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -57,6 +57,7 @@ public class DraftFragment extends Fragment {
 
         final DraftsEntryAdapter adapter = new DraftsEntryAdapter(getContext());
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new RecyclerDividersDecorator(getResources().getColor(R.color.gray_a)));
 
         final Context context = getContext();
 
@@ -67,9 +68,6 @@ public class DraftFragment extends Fragment {
             }
         }).start();
 
-        if (getDraftText("draft_text") != null) {
-            textView.setText(getDraftText("draft_text"));
-        }
 
 //        Post mda = PostFragment.ppost;
 //
