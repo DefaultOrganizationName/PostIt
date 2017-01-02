@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.provider.Telephony;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,7 +69,9 @@ public class DraftsEntryAdapter extends RecyclerView.Adapter<DraftsEntryAdapter.
         holder.postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                PostFragment.setPostFromDraft(draft.post);
+                DraftDatabase.delete(draft);
+                MainActivity.mViewPager.getAdapter().notifyDataSetChanged();
             }
         });
     }

@@ -58,8 +58,8 @@ public class PostFragment extends Fragment {
     private final static int PICK_PHOTO_FROM_GALLERY = 123;
     private final static int REQUEST_PHOTO_FROM_CAMERA = 456;
     public static ImageView iw;
-    String image_path;
-    EditText editTx;
+    static String image_path;
+    static EditText editTx;
     TextView text;
     Bitmap standart;
     public static Bitmap temp;
@@ -167,7 +167,7 @@ public class PostFragment extends Fragment {
                         return true;
                     } else {
                         addProperty("update", true);
-                        addToDrafts(new Post(getNetworks(), editTx.getText().toString(), new String(f.getPath())));
+                        addToDrafts(new Post(getNetworks(), editTx.getText().toString(), new String(image_path == null ? f.getPath() : image_path)));
                         clear();
                     }
                 }
@@ -197,6 +197,16 @@ public class PostFragment extends Fragment {
         image_path = null;
         Utils.hidePhoneKeyboard(getActivity());
         setVisible(0);
+    }
+
+    public static void setPostFromDraft(Post post) {
+        editTx.setText(post.post_text);
+        Log.d("wtf with path", post.image_path);
+        image_path = post.image_path + "";
+        iw.setImageBitmap(Utils.rotatePic(image_path));
+        int[] nw = post.networks;
+        addProperty("vk", nw[0] == 1);
+        addProperty("ok", nw[1] == 1);
     }
 
     public void addToDrafts(Post post) {

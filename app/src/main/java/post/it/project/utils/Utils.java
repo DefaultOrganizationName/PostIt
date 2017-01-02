@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import post.it.project.social_networks.Constants;
